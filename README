@@ -3,7 +3,39 @@ This is your face. On a wall.
 Project is hosted at: https://github.com/fahran/facewall
 An updated version is hosted at: https://github.com/tomh235/facewall
 
-Follow Instructions to get up and running:
+Instructions for Ubuntu (Linux):
+
+Prequisites:
+	Java 1.8 (1.7 also works)
+		sudo add-apt-repository ppa:webupd8team/java
+		sudo apt-get update
+		sudo apt-get install oracle-java8-installer
+
+	Neo4j 1.9.8
+		Download tar.gz from: http://info.neotechnology.com/download-thanks.html?edition=community&release=1.9.8&flavour=unix&_ga=1.240594304.2066794311.1414429136
+		Untar to a convenient location.
+		add to .bashrc: 'export PATH=/neo4jFolderLocation/neo4j-community-1.9.8/bin:$PATH'
+		logout and log back in.
+
+	gvm (gradle 1.10)
+		curl -s get.gvmtool.net | bash
+		gvm install gradle 1.10
+
+	git
+		sudo apt-get install git
+
+Setup cmds:
+	git clone https://github.com/tcable/facewall.git
+	Navigate to project directory.
+	gradle startPopDb tomcatRunWar
+	open a browser and navigate to http://localhost:9000/facewall
+
+Hurray, your face is now on a wall! Well done....
+
+
+Meanwhile, somewhere in Redmond.....
+
+Windows instructions:
 
 1.	Neo4j .
 a.	Download Neo4j 1.9.8 (zip) at http://neo4j.com/download/other-releases/ .
