@@ -62,7 +62,10 @@ public class InsertFixturesUtility {
                                         .withProperty("role", "Wannabe Gangsta"),
                                         defaultPerson()
                                         .withProperty("name", "Charlie Briggs")
-                                        .withProperty("picture", "http://hd.wallpaperswide.com/thumbs/adventure_time___jake-t2.jpg")
+                                        .withProperty("picture", "http://hd.wallpaperswide.com/thumbs/adventure_time___jake-t2.jpg"),
+                                        defaultPerson()
+                                        .withProperty("name", "Thomas Nathan Cable")
+                                        .withProperty("picture", "http://i.imgur.com/DC5FsXv.jpg")
                                 )
                 )
         );

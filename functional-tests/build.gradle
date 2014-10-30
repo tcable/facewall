@@ -11,11 +11,18 @@ dependencies {
     testCompile "org.mockito:mockito-all:1.9.5"
 }
 
-task 'integration'(type: Test, dependsOn: testClasses) {
-    dependsOn ':tomcatDaemonRunWar'
+task ('integration', type: Test, dependsOn: testClasses, description: 'Runs something.') << {
+ //   dependsOn ':tomcatDaemonRunWar'
 }
 
 test {
     // Excludes functional tests from running during build.
     excludes = ["*"]
 }
+
+task ('defaultSchema', dependsOn:['classes', ':startDb'], type:JavaExec, description:'Insert default schema into database.') {
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'uk.co.o2.facewall.functionaltests.data.InsertFixturesUtility'
+}
+
+//defaultSchema.mustRunAfter ':startDb'
