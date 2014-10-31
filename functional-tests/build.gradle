@@ -20,9 +20,12 @@ test {
     excludes = ["*"]
 }
 
-task ('defaultSchema', dependsOn:['classes', ':startDb'], type:JavaExec, description:'Insert default schema into database.') {
+task ('defaultSchema', dependsOn:['classes'], type:JavaExec, description:'Insert default schema into database.') {
+    if (!dbRunning()) {
+      dependsOn ':startDb'
+    }
     classpath = sourceSets.test.runtimeClasspath
     main = 'uk.co.o2.facewall.functionaltests.data.InsertFixturesUtility'
 }
 
-//defaultSchema.mustRunAfter ':startDb'
+defaultSchema.mustRunAfter ':startDb'

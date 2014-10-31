@@ -179,7 +179,7 @@ task ('stopDb', description:'Stops the database.') << {
     }
 }
 
-task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'], description: 'Starts the database. If already running restarts the database. Then populates the database with the default schema.') << {
-
+task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],description: 'Starts the database. If already running restarts the database. (gradle startDb) Then populates the database with the default schema.') << {
+    //dependsOn 'startDb',':functional-tests:defaultSchema'
 }
 
