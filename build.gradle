@@ -1,6 +1,7 @@
 apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'tomcat'
+apply plugin: 'java'
 
 buildscript {
     repositories {
@@ -82,12 +83,103 @@ tomcatRunWar {
         httpPort = 9000
 }
 
-task tomcatDaemonRunWar(type: org.gradle.api.plugins.tomcat.TomcatRunWar) {
+task ('tomcatDaemonRunWar', type: org.gradle.api.plugins.tomcat.TomcatRunWar, description: 'Broken') {
     httpPort = 9001
     daemon = true
+   // tasks[':functional-tests:integration'].execute()
 }
 
 war {
     archiveName = "facewall.war"
     from 'public'
 }
+
+//task('checkDatabase', type:Exec) {
+//    ignoreExitValue = true
+//
+//    //on windows:
+//    commandLine 'cmd', '/c', 'neo4j', 'status'
+//
+//    //store the output instead of printing to the console:
+//    standardOutput = new ByteArrayOutputStream()
+//
+//    //extension method checkDatabase.output() can be used to obtain the output:
+//    ext.output = {
+//        return (standardOutput.toString() + "***")
+//    }
+//
+//    //check the output
+//    if (standardOutput.toString().contains("RUNNING")) {
+//        println "pass"
+//    } else {
+//        println "fail"
+//    }
+//}
+
+//task print (dependsOn: ['checkDatabase']) {
+//    println ("***" + standardOutput.toString() + "***")
+//}
+
+//task('hello', dependsOn: ['checkDatabase']) << {
+//    //println "hello"
+//    println tasks.checkDatabase.output
+//}
+
+
+private boolean dbRunning() {
+    // on linux
+    Process p = "neo4j status".execute()
+    BufferedReader reader = new BufferedReader(new InputStreamReader(p.inputStream))
+    String line
+    while ((line = reader.readLine()) != null) {
+        println line
+    }
+    int exitCode = p.waitFor()
+
+    if (exitCode == 0) {
+        return true
+    } else if (exitCode == 3) {
+        return false
+    } else {
+        throw new Exception("Unexpected exit code from command '$command' was $exitCode")
+    }
+}
+
+
+task ('checkDb', description:'Checks whether or not the database is running.') << {
+    dbRunning()
+}
+
+task ('startDb', description:'Starts the database. If already running restarts the database.') << {
+    Process p
+    if (dbRunning()) {
+        // restart
+        p = "neo4j restart".execute()
+    } else {
+        // start
+        p = "neo4j start".execute()
+    }
+    BufferedReader reader = new BufferedReader(new InputStreamReader(p.inputStream))
+    String line
+    while ((line = reader.readLine()) != null) {
+        println line
+    }
+}
+
+task ('stopDb', description:'Stops the database.') << {
+    Process p
+    if (dbRunning()) {
+        //stop
+        p = "neo4j stop".execute()
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.inputStream))
+        String line
+        while ((line = reader.readLine()) != null) {
+            println line
+        }
+    }
+}
+
+task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],description: 'Starts the database. If already running restarts the database. (gradle startDb) Then populates the database with the default schema.') << {
+    //dependsOn 'startDb',':functional-tests:defaultSchema'
+}
+
