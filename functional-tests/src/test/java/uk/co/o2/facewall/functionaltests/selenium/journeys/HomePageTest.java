@@ -24,7 +24,7 @@ public class HomePageTest extends SeleniumBase {
 
     @BeforeClass
     public static void beforeClass() {
-        neoDb = databaseFor("http://localhost:7474/db/data/");
+        neoDb = databaseFor("GRAPHENEDB_URL");
         facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
         facewallDb.clear();
         facewallDb.initialise();

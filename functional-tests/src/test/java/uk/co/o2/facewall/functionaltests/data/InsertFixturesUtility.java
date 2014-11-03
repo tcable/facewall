@@ -11,7 +11,7 @@ import static org.neo4j.rest.graphdb.GraphDatabaseFactory.databaseFor;
 
 public class InsertFixturesUtility {
 
-    private final static String dbLocation = "http://localhost:7474/db/data";
+    private final static String dbLocation = "GRAPHENEDB_URL";
 
     public static void main(String[] args) {
         GraphDatabaseService neoDb = databaseFor(dbLocation);
