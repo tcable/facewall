@@ -11,11 +11,13 @@ dependencies {
     testCompile "org.mockito:mockito-all:1.9.5"
 }
 
-task ('integration', type: Test, dependsOn: testClasses, description: 'Runs something.') << {
- //   dependsOn ':tomcatDaemonRunWar'
+task ('integration', type: Test, dependsOn: ['testClasses',':tomcatDaemonRunWar'], description: 'starts the server as a daemon and runs the functional tests.' +
+        ' Remember to run gradle clean first') << {
+ //   Outputs.upToDateWhen { false }
 }
 
 test {
+    outputs.upToDateWhen { false }
     // Excludes functional tests from running during build.
     excludes = ["*"]
 }

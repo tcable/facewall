@@ -83,7 +83,7 @@ tomcatRunWar {
         httpPort = 9000
 }
 
-task ('tomcatDaemonRunWar', type: org.gradle.api.plugins.tomcat.TomcatRunWar, description: 'Broken') {
+task ('tomcatDaemonRunWar', type: org.gradle.api.plugins.tomcat.TomcatRunWar, description: 'Only used as part of the task integration') {
     httpPort = 9001
     daemon = true
    // tasks[':functional-tests:integration'].execute()
