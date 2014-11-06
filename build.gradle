@@ -2,6 +2,8 @@ apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'tomcat'
 apply plugin: 'java'
+//apply plugin: 'heroku'
+apply plugin: 'application'
 
 buildscript {
     repositories {
@@ -186,4 +188,10 @@ task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],desc
 task ('stage'){
 
 }
-
+//
+//heroku {
+//
+//    apiKey = 'my-api-key'
+//}
+mainClassName = "facewall"
+applicationName = "facewall"
