@@ -1,7 +1,3 @@
-<#import 'main.ftl' as main>
-
-    <@main.main title = "Team" activeTabIndex = 1>
-
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2 entry">
@@ -34,5 +30,3 @@
         $('img.avatar').fakecrop();
     });
     </script>
-
-</@main.main>
