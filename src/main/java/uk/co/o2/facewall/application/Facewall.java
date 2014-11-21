@@ -49,8 +49,10 @@ final public class Facewall {
 
     private static Facewall createFacewall() {
 
-        RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(new RestAPIFacade("http://localhost:7474/db/data/"));
-        GraphDatabaseService graphDatabaseService = databaseFor("http://localhost:7474/db/data/");
+        String graphene_url = System.getenv("GRAPHENEDB_URL");
+        String db_url = graphene_url == null ?  "http://localhost:7474/db/data" : graphene_url + "/db/data";
+        RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url));
+        GraphDatabaseService graphDatabaseService = databaseFor(db_url);
 
         DataModule dataModule = createDataModule(queryEngine, graphDatabaseService);
         PersonRepository personRepository = dataModule.personRepository;
