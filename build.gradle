@@ -185,9 +185,10 @@ task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],desc
     //dependsOn 'startDb',':functional-tests:defaultSchema'
 }
 
-task ('stage'){
-
-}
+//task ('stage') << {
+//    println "Running stage"
+//    tomcatRunWar
+//}
 //
 //heroku {
 //
