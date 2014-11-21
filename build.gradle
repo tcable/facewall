@@ -130,7 +130,7 @@ war {
 
 private boolean dbRunning() {
     // on linux
-    Process p = "neo4j status".execute()
+    Process p = "blah status".execute()
     BufferedReader reader = new BufferedReader(new InputStreamReader(p.inputStream))
     String line
     while ((line = reader.readLine()) != null) {
@@ -186,7 +186,7 @@ task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],desc
 }
 
 task ('stage'){
-
+    tomcatRunWar
 }
 //
 //heroku {
