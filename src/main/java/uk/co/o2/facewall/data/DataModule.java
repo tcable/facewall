@@ -1,5 +1,6 @@
 package uk.co.o2.facewall.data;
 
+import org.neo4j.graphdb.GraphDatabaseService;
 import uk.co.o2.facewall.data.dao.AdminDAO;
 import uk.co.o2.facewall.data.dao.FacewallDAO;
 import uk.co.o2.facewall.data.dao.QueryingDAO;
@@ -8,10 +9,6 @@ import uk.co.o2.facewall.data.dao.database.query.DatabaseQueryFactory;
 import uk.co.o2.facewall.data.dao.database.query.FacewallQueryResultsMapper;
 import uk.co.o2.facewall.data.dto.PersonInformationMapper;
 import uk.co.o2.facewall.data.dto.TeamInformationMapper;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.rest.graphdb.query.QueryEngine;
-
-import java.util.Map;
 
 public class DataModule {
 
@@ -19,7 +16,7 @@ public class DataModule {
     public final PersonRepository personRepository;
     public final AdminDAO adminDAO;
 
-    private DataModule(QueryEngine<Map<String, Object>> queryEngine, GraphDatabaseService graphDatabaseService) {
+    private DataModule(QueryEngine queryEngine, GraphDatabaseService graphDatabaseService) {
         FacewallDB facewallDB = new FacewallDB(queryEngine);
 
         FacewallQueryResultsMapper queryResultsMapper = new FacewallQueryResultsMapper(new PersonInformationMapper(), new TeamInformationMapper());
@@ -30,7 +27,7 @@ public class DataModule {
         personRepository = new PersonRepository(teamRepository, facewallDAO);
     }
 
-    public static DataModule createDataModule(QueryEngine<Map<String, Object>> queryEngine, GraphDatabaseService graphDatabaseService) {
+    public static DataModule createDataModule(QueryEngine queryEngine, GraphDatabaseService graphDatabaseService) {
         return new DataModule(queryEngine, graphDatabaseService);
     }
 }

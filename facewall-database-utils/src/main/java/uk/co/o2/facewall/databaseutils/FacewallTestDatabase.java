@@ -1,16 +1,16 @@
 package uk.co.o2.facewall.databaseutils;
 
-import uk.co.o2.facewall.databaseutils.fixture.Fixtures;
-import uk.co.o2.facewall.databaseutils.fixture.PersonData;
-import uk.co.o2.facewall.databaseutils.fixture.TeamData;
-import uk.co.o2.facewall.databaseutils.util.ForwardingGraphDatabaseService;
 import org.neo4j.cypher.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
-import org.neo4j.rest.graphdb.query.QueryEngine;
+import uk.co.o2.facewall.data.QueryEngine;
+import uk.co.o2.facewall.databaseutils.fixture.Fixtures;
+import uk.co.o2.facewall.databaseutils.fixture.PersonData;
+import uk.co.o2.facewall.databaseutils.fixture.TeamData;
+import uk.co.o2.facewall.databaseutils.util.ForwardingGraphDatabaseService;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -78,7 +78,7 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
         seedFixturesOperation.execute(this);
     }
 
-    public QueryEngine<Map<String, Object>> createQueryEngine() {
+    public QueryEngine createQueryEngine() {
         ExecutionEngine executionEngine = new ExecutionEngine(this);
         return createQueryEngineAdaptor(executionEngine);
     }

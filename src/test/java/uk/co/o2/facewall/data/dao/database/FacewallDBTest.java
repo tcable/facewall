@@ -11,11 +11,9 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexManager;
-import org.neo4j.rest.graphdb.query.QueryEngine;
+import uk.co.o2.facewall.data.QueryEngine;
 import uk.co.o2.facewall.data.dao.database.query.DatabaseQuery;
 import uk.co.o2.facewall.data.dao.database.query.DatabaseQueryBuilder;
-
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
@@ -30,7 +28,8 @@ import static uk.co.o2.facewall.data.dao.database.NodeIndex.Teams;
 public class FacewallDBTest {
 
     @Mock GraphDatabaseService mockDb;
-    @Mock QueryEngine<Map<String,Object>> mockQueryEngine;
+    @Mock
+    QueryEngine mockQueryEngine;
 
     @Mock IndexManager mockIndexManager;
     @Mock Index<Node> mockIndex;

@@ -16,13 +16,13 @@
     <div id="result"></div>
 </div>
 
-<script src="/facewall/assets/javascripts/search-box.js"></script>
-<script src="/facewall/assets/javascripts/jquery.fakecrop.js"></script>
+<script src="/assets/javascripts/search-box.js"></script>
+<script src="/assets/javascripts/jquery.fakecrop.js"></script>
 <script>
     var searchInput = $("#searchInput");
     var result = $("#result");
     searchInput.focus();
-    autoSearchOnKeyUp(searchInput, "/facewall/search/results", result);
+    autoSearchOnKeyUp(searchInput, "/search/results", result);
 </script>
 
 </@main.main>

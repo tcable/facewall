@@ -1,24 +1,21 @@
 package uk.co.o2.facewall.data.dao.database;
 
-import uk.co.o2.facewall.data.dao.database.query.DatabaseQuery;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.mockito.ArgumentCaptor;
-import org.neo4j.rest.graphdb.query.QueryEngine;
-import org.neo4j.rest.graphdb.util.QueryResultBuilder;
+import uk.co.o2.facewall.data.QueryEngine;
+import uk.co.o2.facewall.data.dao.database.query.DatabaseQuery;
 
 import java.util.Map;
 
+import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static uk.co.o2.facewall.data.dao.database.NodeIndex.Persons;
 import static uk.co.o2.facewall.data.dao.database.NodeIndex.Teams;
 import static uk.co.o2.facewall.data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
-import static java.util.Collections.emptyList;
-import static org.mockito.ArgumentCaptor.forClass;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
 
 public class DatabaseQueryMatchers {
 
@@ -142,9 +139,9 @@ public class DatabaseQueryMatchers {
 
     private static String captureCypherStatement(DatabaseQuery databaseQuery) {
         QueryEngine mockEngine = mock(QueryEngine.class);
-        when(mockEngine.query(anyString(), anyMap())).thenReturn(
-            new QueryResultBuilder(emptyList())
-        );
+//        when(mockEngine.query(anyString(), anyMap())).thenReturn(
+//            new QueryResultBuilder(emptyList())
+//        );
 
         databaseQuery.execute(mockEngine);
 

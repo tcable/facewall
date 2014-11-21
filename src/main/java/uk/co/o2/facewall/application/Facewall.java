@@ -1,18 +1,20 @@
 package uk.co.o2.facewall.application;
 
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import uk.co.o2.facewall.data.DataModule;
+import uk.co.o2.facewall.data.JdbcCypherExecutor;
 import uk.co.o2.facewall.data.PersonRepository;
 import uk.co.o2.facewall.data.TeamRepository;
 import uk.co.o2.facewall.data.dao.AdminDAO;
 import uk.co.o2.facewall.facade.*;
-import uk.co.o2.facewall.facade.modelmapper.*;
+import uk.co.o2.facewall.facade.modelmapper.OverviewModelMapper;
+import uk.co.o2.facewall.facade.modelmapper.PersonDetailsModelMapper;
+import uk.co.o2.facewall.facade.modelmapper.SearchResultsModelMapper;
+import uk.co.o2.facewall.facade.modelmapper.TeamDetailsModelMapper;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.rest.graphdb.RestAPIFacade;
-import org.neo4j.rest.graphdb.query.RestCypherQueryEngine;
 
 import static uk.co.o2.facewall.data.DataModule.createDataModule;
-import static org.neo4j.rest.graphdb.GraphDatabaseFactory.databaseFor;
 
 final public class Facewall {
 
@@ -50,9 +52,21 @@ final public class Facewall {
     private static Facewall createFacewall() {
 
         String graphene_url = System.getenv("GRAPHENEDB_URL");
+//        String graphene_url = "http://app31827831.sb02.stations.graphenedb.com:24789";
         String db_url = graphene_url == null ?  "http://localhost:7474/db/data" : graphene_url + "/db/data";
-        RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url));
-        GraphDatabaseService graphDatabaseService = databaseFor(db_url);
+        System.out.println("DB URL: " + db_url);
+
+        try {
+            Class.forName("org.neo4j.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        JdbcCypherExecutor queryEngine = new JdbcCypherExecutor(db_url,"app31827831","ATzDwxBFhbEniy78dB8L");
+        GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(db_url);
+
+//        RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url));
+//        GraphDatabaseService graphDatabaseService = databaseFor(db_url);
 
         DataModule dataModule = createDataModule(queryEngine, graphDatabaseService);
         PersonRepository personRepository = dataModule.personRepository;

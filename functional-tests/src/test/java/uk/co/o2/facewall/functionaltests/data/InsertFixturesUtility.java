@@ -16,6 +16,7 @@ public class InsertFixturesUtility {
 
     public static void main(String[] args) {
 
+    System.out.println("DB Location: " + dbLocation);
         GraphDatabaseService neoDb = databaseFor(dbLocation==null ? localDbLocation : dbLocation);
         FacewallTestDatabase facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
 

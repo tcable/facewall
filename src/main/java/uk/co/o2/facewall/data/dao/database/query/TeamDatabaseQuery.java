@@ -1,10 +1,10 @@
 package uk.co.o2.facewall.data.dao.database.query;
 
-import org.neo4j.rest.graphdb.query.QueryEngine;
-import org.neo4j.rest.graphdb.util.QueryResult;
+import uk.co.o2.facewall.data.QueryEngine;
 import uk.co.o2.facewall.data.dao.database.QueryResultRow;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import static uk.co.o2.facewall.data.dao.database.NodeIndex.Persons;
@@ -25,7 +25,7 @@ class TeamDatabaseQuery implements DatabaseQuery {
         this.propertyCriteria = propertyCriteria;
     }
 
-    @Override public Iterable<QueryResultRow> execute(QueryEngine<Map<String, Object>> queryEngine) {
+    @Override public Iterable<QueryResultRow> execute(QueryEngine queryEngine) {
         Map<String, Object> parameters = new HashMap<>();
         String cypherQuery =
             "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*'), " +
@@ -44,7 +44,7 @@ class TeamDatabaseQuery implements DatabaseQuery {
         cypherQuery +=
             "RETURN person, team";
 
-        QueryResult<Map<String,Object>> cypherResults = queryEngine.query(cypherQuery, parameters);
+        Iterator<Map<String,Object>> cypherResults = queryEngine.query(cypherQuery, parameters);
         return queryResultsMapper.map(newPersonNodeKey("person"), newTeamNodeKey("team"), cypherResults);
     }
 }

@@ -2,13 +2,12 @@ package uk.co.o2.facewall.databaseutils.util;
 
 import org.neo4j.cypher.javacompat.ExecutionEngine;
 import org.neo4j.cypher.javacompat.ExecutionResult;
-import org.neo4j.rest.graphdb.query.QueryEngine;
-import org.neo4j.rest.graphdb.util.QueryResult;
-import org.neo4j.rest.graphdb.util.QueryResultBuilder;
+import uk.co.o2.facewall.data.QueryEngine;
 
+import java.util.Iterator;
 import java.util.Map;
 
-public class QueryEngineAdaptor implements QueryEngine<Map<String, Object>> {
+public class QueryEngineAdaptor implements QueryEngine {
 
     private final ExecutionEngine engine;
 
@@ -16,13 +15,13 @@ public class QueryEngineAdaptor implements QueryEngine<Map<String, Object>> {
         this.engine = engine;
     }
 
-    public static QueryEngine<Map<String, Object>> createQueryEngineAdaptor(ExecutionEngine executionEngine) {
+    public static QueryEngine createQueryEngineAdaptor(ExecutionEngine executionEngine) {
         return new QueryEngineAdaptor(executionEngine);
     }
 
-    @Override public QueryResult<Map<String, Object>> query(String statement, Map<String, Object> params) {
+    @Override public Iterator<Map<String, Object>> query(String statement, Map<String, Object> params) {
         ExecutionResult result = engine.execute(statement, params);
 
-        return new QueryResultBuilder<>(result);
+        return result.iterator();
     }
 }

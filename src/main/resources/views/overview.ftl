@@ -7,26 +7,26 @@
             <#list entries as entry>
                 <div class="col-md-3 col-sm-4 entry">
                     <h5 class="text-center teamName">
-                        <a href="/facewall/team/${entry.teamHeader}">${entry.teamHeader}</a>
+                        <a href="/team/${entry.teamHeader}">${entry.teamHeader}</a>
                     </h5>
-                        <a href="/facewall/person/${entry.link}">
+                        <a href="/person/${entry.link}">
                             <div class="imgWrapper ${entry.colour}" style="border: 15px solid #${entry.colour}">
                                 <img class="avatar" src="${entry.picture}"/>
                             </div>
                         </a>
 
                     <h3 class="text-center entryName">
-                        <a href="/facewall/person/${entry.link}">${entry.name}</a>
+                        <a href="/person/${entry.link}">${entry.name}</a>
                     </h3>
                 </div>
             </#list>
         </div>
     <#else>
-        <h1 class="no-results main text-center"><img class="smiley" src="/facewall/assets/images/smiley_sad.png"/>There are no faces here!</h1>
+        <h1 class="no-results main text-center"><img class="smiley" src="/assets/images/smiley_sad.png"/>There are no faces here!</h1>
     </#if>
 </div>
-<script src="/facewall/assets/javascripts/snake-order.js"></script>
-<script src="/facewall/assets/javascripts/jquery.fakecrop.js"></script>
+<script src="/assets/javascripts/snake-order.js"></script>
+<script src="/assets/javascripts/jquery.fakecrop.js"></script>
 <script>
     $(document).ready(function () {
         $('img.avatar').fakecrop();
