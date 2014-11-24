@@ -28,13 +28,14 @@ public class SearchResultsModelMapper {
 
     private static class PersonSearchResultMapper {
         public static PersonSearchResult map(Person person) {
-            return new PersonSearchResult(person.name(), person.team().name(), person.picture(), person.email(), person.role());
+            String link = person.getId().value;
+            return new PersonSearchResult(person.name(), person.team().name(), person.picture(), person.email(), person.role(), person.team().colour(), link);
         }
     }
 
     private static class TeamSearchResultMapper {
         public static TeamSearchResult map(Team team) {
-            return new TeamSearchResult(team.name());
+            return new TeamSearchResult(team.name(), team.colour());
         }
     }
 }
