@@ -39,7 +39,7 @@ public class SearchFacade {
         SearchResultsModel resultsModel;
         List<Person> persons = personRepository.queryPersons(query);
         List<Team> teams = teamRepository.queryTeams(query);
-
+        /*
         if (persons.size() == 1 && teams.isEmpty()) {
             resultsModel = personDetailsModelMapper.map(persons.get(0));
         } else if (teams.size() == 1 && persons.isEmpty()) {
@@ -47,6 +47,8 @@ public class SearchFacade {
         } else {
             resultsModel = searchResultsModelMapper.map(persons, teams);
         }
+        */
+        resultsModel = searchResultsModelMapper.map(persons, teams);
         return resultsModel;
 
     }

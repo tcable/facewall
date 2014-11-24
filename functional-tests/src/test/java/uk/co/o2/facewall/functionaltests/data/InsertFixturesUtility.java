@@ -64,7 +64,10 @@ public class InsertFixturesUtility {
                                         .withProperty("name", "Charlie Briggs")
                                         .withProperty("picture", "http://hd.wallpaperswide.com/thumbs/adventure_time___jake-t2.jpg"),
                                         defaultPerson()
-                                        .withProperty("name", "Thomas Nathan Cable")
+                                        .withProperty("name", "Tom (Eric) Cable")
+                                        .withProperty("picture", "http://i.imgur.com/DC5FsXv.jpg"),
+                                        defaultPerson()
+                                        .withProperty("name", "Ecom Test")
                                         .withProperty("picture", "http://i.imgur.com/DC5FsXv.jpg")
                                 )
                 )
