@@ -53,41 +53,6 @@ public class SearchTest extends SeleniumBase {
     }
 
     @Test
-     public void search_for_person() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
-        singlePersonSearchResultsPage = searchPage.searchPerson("Fred Weasley");
-        assertThat(singlePersonSearchResultsPage.getPersonName(), is("Fred Weasley"));
-    }
-
-   @Test
-    public void search_for_person_with_mixed_casing() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Jimmy Weasley")));
-        singlePersonSearchResultsPage = searchPage.searchPerson("fReD JiMMY WeasLeY");
-        assertThat(singlePersonSearchResultsPage.getPersonName(), is("Fred Jimmy Weasley"));
-    }
-
-   @Test
-    public void single_person_result_has_an_email() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley").withProperty("email", "fred.weasley@hogwarts.odu.uk")));
-        singlePersonSearchResultsPage = searchPage.searchPerson("Fred Weasley");
-        assertThat(singlePersonSearchResultsPage.hasEmail("fred.weasley@hogwarts.odu.uk"), is(true));
-    }
-
-    @Test
-    public void single_person_result_has_an_image_tag() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley").withProperty("img", "http://www.fakeimg.com")));
-        singlePersonSearchResultsPage = searchPage.searchPerson("Fred Weasley");
-        assertThat(singlePersonSearchResultsPage.imageExists(), is(true));
-    }
-
-    @Test
-    public void single_person_result_has_a_role() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley").withProperty("role", "Entrepreneur")));
-        singlePersonSearchResultsPage = searchPage.searchPerson("Fred Weasley");
-        assertThat(singlePersonSearchResultsPage.hasRole("Entrepreneur"), is(true));
-    }
-
-    @Test
     public void search_for_team() throws Exception {
         facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
         searchResultsPage = searchPage.searchTeam("Ecom Ars");
