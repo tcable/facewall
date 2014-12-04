@@ -1,9 +1,16 @@
+<#import 'main.ftl' as main>
+
+<@main.main title = "Team Details" activeTabIndex = 4>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2 entry">
-                <h5 class="teamName" style="color: {colour}">${name}</h5>
+            <div class="col-md-4 col-md-offset-4 team-entry">
+                <div style="border: 10px solid #${colour};" class="thumbnail">
+                    <h1 class="text-center">${name}</h1>
+                </div>
             </div>
         </div>
+
+
         <#if entries?has_content>
             <div class="row">
                 <#list entries as entry>
@@ -30,3 +37,5 @@
         $('img.avatar').fakecrop();
     });
     </script>
+
+</@main.main>
