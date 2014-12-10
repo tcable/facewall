@@ -2,7 +2,7 @@
 <div class="container">
     <#if !persons?has_content && !teams?has_content>
             <div class="col-md-8 col-md-offset-2">
-                <h1 class="no-results search"><img src="/facewall/assets/images/smiley_sad.png" height="55" />No results found!</h1>
+                <h1 class="no-results search"><img src="/assets/images/smiley_sad.png" height="55" />No results found!</h1>
             </div>
         </div>
     <#else>
@@ -17,7 +17,7 @@
                 <#list persons as result>
                     <div class="col-md-3 col-sm-4 entry">
                         <h5 class="text-center teamName">
-                            <a href="/facewall/team/${result.teamName}">${result.teamName}</a>
+                            <a href="/team/${result.teamName}">${result.teamName}</a>
                         </h5>
                         <a href="#">
                             <div class="imgWrapper">
@@ -48,7 +48,7 @@
         </#if>
     </#if>
 </div>
-<script src="/facewall/assets/javascripts/jquery.fakecrop.js"></script>
+<script src="/assets/javascripts/jquery.fakecrop.js"></script>
 <script>
     $(document).ready(function () {
         $('img.avatar').fakecrop();
