@@ -44,6 +44,11 @@ public class PersonDatabaseQuery implements DatabaseQuery {
         System.out.println( cypherQuery);
 
         Iterator<Map<String, Object>> cypherResults = queryEngine.query(cypherQuery, parameters);
-        return queryResultsMapper.map(newPersonNodeKey("person"), newTeamNodeKey("team"), cypherResults);
+        Iterable<QueryResultRow> results = queryResultsMapper.map(newPersonNodeKey("person"), newTeamNodeKey("team"), cypherResults);
+        for (QueryResultRow result : results){
+            System.out.println(result.getPerson().getName());
+        }
+        return results;
     }
+    //queryResultsMapper.map(queryEngine.query(cypherQuery, parameters))
 }

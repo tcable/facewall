@@ -1,7 +1,12 @@
 package uk.co.o2.facewall.data.dto;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Transaction;
+import org.neo4j.test.TestGraphDatabaseFactory;
 
 import java.util.HashMap;
 
@@ -14,13 +19,30 @@ import static org.hamcrest.core.Is.is;
 
 public class TeamInformationMapperTest {
 
+    protected GraphDatabaseService graphDb;
     private final TeamInformationMapper teamInformationMapper = new TeamInformationMapper();
+
+    @Before
+    public void prepareTestDatabase() {
+        graphDb = new TestGraphDatabaseFactory().newImpermanentDatabase();
+    }
+
+    @After
+    public void destroyTestDatabase() {
+        graphDb.shutdown();
+    }
 
     @Test
     public void map_id() throws Exception {
-        Node mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
-            put("id", "some-id");
-        }});
+        Transaction tx = graphDb.beginTx();
+        Node mockNode = null;
+        try {
+            mockNode = graphDb.createNode();
+            mockNode.setProperty("id", "some-id");
+            tx.success();
+        } finally {
+            tx.close();
+        }
 
         TeamInformation result = teamInformationMapper.map(mockNode);
         assertThat(result.getId(), is(newTeamId("some-id")));
@@ -28,9 +50,15 @@ public class TeamInformationMapperTest {
 
     @Test
     public void map_name() throws Exception {
-        Node mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
-            put("name", "blinky's team");
-        }});
+        Transaction tx = graphDb.beginTx();
+        Node mockNode = null;
+        try {
+            mockNode = graphDb.createNode();
+            mockNode.setProperty("name", "blinky's team");
+            tx.success();
+        } finally {
+            tx.close();
+        }
 
         TeamInformation result = teamInformationMapper.map(mockNode);
         assertThat(result.getName(), is("blinky's team"));
@@ -38,9 +66,15 @@ public class TeamInformationMapperTest {
 
     @Test
     public void map_picture() throws Exception {
-        Node mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
-            put("colour", "blue");
-        }});
+        Transaction tx = graphDb.beginTx();
+        Node mockNode = null;
+        try {
+            mockNode = graphDb.createNode();
+            mockNode.setProperty("colour", "blue");
+            tx.success();
+        } finally {
+            tx.close();
+        }
 
         TeamInformation result = teamInformationMapper.map(mockNode);
         assertThat(result.getColour(), is("blue"));
