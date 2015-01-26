@@ -27,7 +27,7 @@ public class PersonDatabaseQuery implements DatabaseQuery {
         Map<String, Object> parameters = new HashMap<>();
         String cypherQuery =
             "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ':' + id + "') " +
-            "MATCH (person)-[r?]->(team) " +
+            "OPTIONAL MATCH (person)-[r]->(team) " +
             "WHERE 1=1 ";
 
         int i = 0;

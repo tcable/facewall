@@ -12,10 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static uk.co.o2.facewall.data.dao.database.query.FacewallQueryResultsMapperTest.MockCypherResultsBuilder.MockCypherResultsRowBuilder.defaultRow;
 import static uk.co.o2.facewall.data.dao.database.query.FacewallQueryResultsMapperTest.MockCypherResultsBuilder.MockCypherResultsRowBuilder.teamlessPersonRow;
@@ -44,7 +41,7 @@ public class FacewallQueryResultsMapperTest {
 
     @Test
     public void map_multiple_rows() throws Exception {
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(
                         defaultRow(),
                         defaultRow(),
@@ -61,7 +58,7 @@ public class FacewallQueryResultsMapperTest {
 
     @Test
     public void map_personInformation_for_rows_with_person_and_team() throws Exception {
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(defaultRow())
                 .build();
 
@@ -77,7 +74,7 @@ public class FacewallQueryResultsMapperTest {
 
     @Test
     public void map_teamInformation_for_rows_with_person_and_team() throws Exception {
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(defaultRow())
                 .build();
 
@@ -95,7 +92,7 @@ public class FacewallQueryResultsMapperTest {
     public void personInformation_mapped_using_mapper_for_rows_with_person_and_team() throws Exception {
         Node expectedPerson = mock(Node.class);
 
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(defaultRow()
                     .withPerson(expectedPerson)
                 ).build();
@@ -109,7 +106,7 @@ public class FacewallQueryResultsMapperTest {
     public void teamInformation_mapped_using_mapper_for_rows_with_person_and_team() throws Exception {
         Node expectedTeam = mock(Node.class);
 
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(defaultRow()
                     .withTeam(expectedTeam)
                 ).build();
@@ -123,7 +120,7 @@ public class FacewallQueryResultsMapperTest {
     public void personInformation_mapped_using_mapper_for_rows_with_teamless_person() throws Exception {
         Node expectedPerson = mock(Node.class);
 
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(teamlessPersonRow()
                         .withPerson(expectedPerson)
                 ).build();
@@ -135,7 +132,7 @@ public class FacewallQueryResultsMapperTest {
 
     @Test
     public void teamInformation_mapped_using_mapper_for_rows_with_teamless_person() throws Exception {
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(teamlessPersonRow()
                 ).build();
 
@@ -146,7 +143,7 @@ public class FacewallQueryResultsMapperTest {
 
     @Test
     public void personInformation_mapped_using_mapper_for_multiple_rows() throws Exception {
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(
                         defaultRow(),
                         defaultRow(),
@@ -160,7 +157,7 @@ public class FacewallQueryResultsMapperTest {
 
     @Test
     public void teamInformation_mapped_using_mapper_for_multiple_rows() throws Exception {
-        Iterable<Map<String, Object>> cypherResults = results()
+        Iterator<Map<String, Object>> cypherResults = results()
                 .withRows(
                         defaultRow(),
                         defaultRow(),
@@ -189,8 +186,8 @@ public class FacewallQueryResultsMapperTest {
             return this;
         }
 
-        public Iterable<Map<String, Object>> build() {
-            return queryResults;
+        public Iterator<Map<String, Object>> build() {
+            return queryResults.iterator();
         }
 
         static class MockCypherResultsRowBuilder {

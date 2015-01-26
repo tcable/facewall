@@ -4,10 +4,13 @@ import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.event.KernelEventHandler;
 import org.neo4j.graphdb.event.TransactionEventHandler;
 import org.neo4j.graphdb.index.IndexManager;
+import org.neo4j.graphdb.schema.Schema;
+import org.neo4j.graphdb.traversal.BidirectionalTraversalDescription;
+import org.neo4j.graphdb.traversal.TraversalDescription;
 
 public abstract class ForwardingGraphDatabaseService implements GraphDatabaseService {
 
-    private final GraphDatabaseService backingDatabase;
+    protected final GraphDatabaseService backingDatabase;
 
     protected ForwardingGraphDatabaseService(GraphDatabaseService backingDatabase) {
         this.backingDatabase = backingDatabase;
@@ -23,10 +26,6 @@ public abstract class ForwardingGraphDatabaseService implements GraphDatabaseSer
 
     @Override public Relationship getRelationshipById(long id) {
         return backingDatabase.getRelationshipById(id);
-    }
-
-    @Override public Node getReferenceNode() {
-        return backingDatabase.getReferenceNode();
     }
 
     @Override public Iterable<Node> getAllNodes() {
@@ -69,5 +68,30 @@ public abstract class ForwardingGraphDatabaseService implements GraphDatabaseSer
 
     @Override public IndexManager index() {
         return backingDatabase.index();
+    }
+
+    @Override
+    public Node createNode(Label... labels) {
+        return backingDatabase.createNode(labels);
+    }
+
+    @Override
+    public ResourceIterable<Node> findNodesByLabelAndProperty(Label label, String key, Object value) {
+        return backingDatabase.findNodesByLabelAndProperty(label,key,value);
+    }
+
+    @Override
+    public Schema schema() {
+        return backingDatabase.schema();
+    }
+
+    @Override
+    public TraversalDescription traversalDescription() {
+        return backingDatabase.traversalDescription();
+    }
+
+    @Override
+    public BidirectionalTraversalDescription bidirectionalTraversalDescription() {
+        return backingDatabase.bidirectionalTraversalDescription();
     }
 }

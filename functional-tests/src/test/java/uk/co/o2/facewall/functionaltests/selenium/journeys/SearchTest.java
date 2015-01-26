@@ -1,24 +1,24 @@
 package uk.co.o2.facewall.functionaltests.selenium.journeys;
 
-import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
 import uk.co.o2.facewall.functionaltests.selenium.common.SeleniumBase;
 import uk.co.o2.facewall.functionaltests.selenium.pages.HomePage;
 import uk.co.o2.facewall.functionaltests.selenium.pages.SearchPage;
 import uk.co.o2.facewall.functionaltests.selenium.pages.SearchResultsPage;
 import uk.co.o2.facewall.functionaltests.selenium.pages.SinglePersonSearchResultsPage;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static uk.co.o2.facewall.databaseutils.FacewallTestDatabaseFactory.createFacewallTestDatabaseWrappingExistingDatabase;
 import static uk.co.o2.facewall.databaseutils.fixture.Fixtures.newFixtures;
 import static uk.co.o2.facewall.databaseutils.fixture.PersonDataFactory.defaultPerson;
 import static uk.co.o2.facewall.databaseutils.fixture.TeamDataFactory.defaultTeamWithDefaultMembers;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.neo4j.rest.graphdb.GraphDatabaseFactory.databaseFor;
 
 public class SearchTest extends SeleniumBase {
 
@@ -31,7 +31,7 @@ public class SearchTest extends SeleniumBase {
 
     @BeforeClass
     public static void beforeClass() {
-        neoDb = databaseFor("GRAPHENEDB_URL");
+        neoDb = new GraphDatabaseFactory().newEmbeddedDatabase("http://localhost:7474/db/data");
         facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
         facewallDb.clear();
         facewallDb.initialise();

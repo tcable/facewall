@@ -34,8 +34,7 @@ final public class Facewall {
             PersonDetailsFacade personDetailsFacade,
             TeamDetailsFacade teamDetailsFacade,
             TeamFacade teamFacade,
-            SignUpFacade signUpFacade, UserModelValidator userModelValidator)
-    {
+            SignUpFacade signUpFacade, UserModelValidator userModelValidator) {
         this.overviewFacade = overviewFacade;
         this.searchFacade = searchFacade;
         this.personDetailsFacade = personDetailsFacade;
@@ -53,7 +52,7 @@ final public class Facewall {
 
         String graphene_url = System.getenv("GRAPHENEDB_URL");
 //        String graphene_url = "http://app31827831.sb02.stations.graphenedb.com:24789";
-        String db_url = graphene_url == null ?  "http://localhost:7474/db/data" : graphene_url + "/db/data";
+        String db_url = graphene_url == null ? "http://localhost:7474/db/data" : graphene_url + "/db/data";
         System.out.println("DB URL: " + db_url);
 
         try {
@@ -61,9 +60,13 @@ final public class Facewall {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        JdbcCypherExecutor queryEngine = new JdbcCypherExecutor(db_url,"app31827831","ATzDwxBFhbEniy78dB8L");
+        JdbcCypherExecutor queryEngine;
         GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(db_url);
+        if (graphene_url.isEmpty()) {
+            queryEngine = new JdbcCypherExecutor(db_url);
+        } else {
+            queryEngine = new JdbcCypherExecutor(db_url, "app31827831", "ATzDwxBFhbEniy78dB8L");
+        }
 
 //        RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url));
 //        GraphDatabaseService graphDatabaseService = databaseFor(db_url);
@@ -84,11 +87,11 @@ final public class Facewall {
         TeamFacade teamFacade = new TeamFacade(teamRepository, teamDetailsModelMapper);
 
         SearchFacade searchFacade = new SearchFacade(
-            personRepository,
-            teamRepository,
-            searchResultsModelMapper,
-            personDetailsModelMapper,
-            teamDetailsModelMapper
+                personRepository,
+                teamRepository,
+                searchResultsModelMapper,
+                personDetailsModelMapper,
+                teamDetailsModelMapper
         );
 
         SignUpFacade signUpFacade = new SignUpFacade(

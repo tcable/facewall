@@ -1,5 +1,6 @@
 package uk.co.o2.facewall.functionaltests.selenium.journeys;
 
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
 import org.junit.After;
 import org.junit.Before;
@@ -15,7 +16,6 @@ import static uk.co.o2.facewall.databaseutils.fixture.Fixtures.newFixtures;
 import static uk.co.o2.facewall.databaseutils.fixture.PersonDataFactory.defaultPerson;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.neo4j.rest.graphdb.GraphDatabaseFactory.databaseFor;
 
 public class PersonDetailsTest extends SeleniumBase {
 
@@ -29,7 +29,7 @@ public class PersonDetailsTest extends SeleniumBase {
 
     @BeforeClass
     public static void beforeClass() {
-        neoDb = databaseFor("GRAPHENEDB_URL");
+        neoDb = new GraphDatabaseFactory().newEmbeddedDatabase("http://localhost:7474/db/data");
         facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
         facewallDb.clear();
         facewallDb.initialise();

@@ -15,7 +15,6 @@ public class SeleniumBase {
 
     @Before
     public void beforeTestAction() {
-        TestContext.cleanContext();
         if (Configuration.testDriver.equals("webdriver")) {
             WebBrowser.deleteAllCookies();
         }

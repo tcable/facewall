@@ -3,6 +3,7 @@ package uk.co.o2.facewall.databaseutils;
 import org.neo4j.cypher.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
@@ -79,18 +80,23 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
     }
 
     public QueryEngine createQueryEngine() {
-        ExecutionEngine executionEngine = new ExecutionEngine(this);
+        ExecutionEngine executionEngine = new ExecutionEngine(this.backingDatabase);
         return createQueryEngineAdaptor(executionEngine);
     }
 
     public Node findPersonById(String personId) {
-        IndexHits<Node> hits = index().forNodes(Persons.indexName).query(Persons.key, personId);
-        Node personNode = hits.getSingle();
-
-        if (personNode != null) {
-            return personNode;
-        } else {
-            throw new NoSuchElementException("no person with that id");
+        Transaction tx = this.beginTx();
+        try {
+            IndexHits<Node> hits = index().forNodes(Persons.indexName).query(Persons.key, personId);
+            Node personNode = hits.getSingle();
+            if (personNode != null) {
+                tx.success();
+                return personNode;
+            } else {
+                throw new NoSuchElementException("no person with that id");
+            }
+        } finally {
+            tx.close();
         }
     }
 }

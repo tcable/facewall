@@ -1,12 +1,13 @@
 package uk.co.o2.facewall.data.dao;
 
-import uk.co.o2.facewall.data.dao.database.RelationshipTypes;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
+import uk.co.o2.facewall.data.dao.database.RelationshipTypes;
 import uk.co.o2.facewall.util.CompositeMatcher;
 
 public class PersonNodeMatcher extends CompositeMatcher<Node>{
@@ -23,7 +24,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return id.equals(target.getProperty("id"));
+                return id.equals(getProp(target, "id"));
             }
 
             @Override
@@ -39,7 +40,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return name.equals(target.getProperty("name"));
+                return name.equals(getProp(target, "name"));
             }
 
             @Override
@@ -55,7 +56,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return picture.equals(target.getProperty("picture"));
+                return picture.equals(getProp(target, "picture"));
             }
 
             @Override
@@ -71,7 +72,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return email.equals(target.getProperty("email"));
+                return email.equals(getProp(target, "email"));
             }
 
             @Override
@@ -87,7 +88,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return location.equals(target.getProperty("location"));
+                return location.equals(getProp(target, "location"));
             }
 
             @Override
@@ -103,8 +104,15 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                Relationship teamMemberRelationship = target.getSingleRelationship(RelationshipTypes.TEAMMEMBER_OF, Direction.OUTGOING);
-                return teamNode.matches(teamMemberRelationship.getOtherNode(target));
+                Transaction tx = target.getGraphDatabase().beginTx();
+                try {
+                    Relationship teamMemberRelationship = target.getSingleRelationship(RelationshipTypes.TEAMMEMBER_OF, Direction.OUTGOING);
+                    Node otherNode = teamMemberRelationship.getOtherNode(target);
+                    tx.success();
+                    return teamNode.matches(otherNode);
+                } finally {
+                    tx.close();
+                }
             }
 
             @Override
@@ -113,5 +121,16 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
             }
         });
         return this;
+    }
+
+    private Object getProp(Node target, String property) {
+        Transaction tx = target.getGraphDatabase().beginTx();
+        try {
+            Object obj = target.getProperty(property);
+            tx.success();
+            return obj;
+        } finally {
+            tx.close();
+        }
     }
 }
