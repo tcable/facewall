@@ -3,6 +3,7 @@ package uk.co.o2.facewall.data.dao.database.query;
 import uk.co.o2.facewall.data.QueryEngine;
 import uk.co.o2.facewall.data.dao.database.QueryResultRow;
 
+import javax.validation.constraints.Null;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class PersonDatabaseQuery implements DatabaseQuery {
         Map<String, Object> parameters = new HashMap<>();
         String cypherQuery =
             "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ':' + id + "') " +
-            "OPTIONAL MATCH (person)-[r]->(team) " +
+            "MATCH (person) " +
             "WHERE 1=1 ";
 
         int i = 0;
@@ -40,15 +41,15 @@ public class PersonDatabaseQuery implements DatabaseQuery {
         }
 
         cypherQuery +=
+            "OPTIONAL MATCH (person)-[r]->(team) " +
             "RETURN person, team";
-        System.out.println( cypherQuery);
+        //System.out.println( cypherQuery);
 
         Iterator<Map<String, Object>> cypherResults = queryEngine.query(cypherQuery, parameters);
         Iterable<QueryResultRow> results = queryResultsMapper.map(newPersonNodeKey("person"), newTeamNodeKey("team"), cypherResults);
-        for (QueryResultRow result : results){
-            System.out.println(result.getPerson().getName());
-        }
+        //for (QueryResultRow result : results){
+        //    System.out.println(result.getPerson().getName() + " : " + result.getTeam().getName());
+        //}
         return results;
     }
-    //queryResultsMapper.map(queryEngine.query(cypherQuery, parameters))
 }

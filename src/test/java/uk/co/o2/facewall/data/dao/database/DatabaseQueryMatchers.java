@@ -86,8 +86,9 @@ public class DatabaseQueryMatchers {
 
                 return cypherStatement.contains(
                     "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*') " +
-                    "MATCH (person)-[r?]->(team) " +
+                    "MATCH (person) " +
                     "WHERE 1=1 " +
+                    "OPTIONAL MATCH (person)-[r]->(team) " +
                     "RETURN person, team"
                 );
             }
@@ -105,9 +106,10 @@ public class DatabaseQueryMatchers {
 
                 return cypherStatement.contains(
                     "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*') " +
-                    "MATCH (person)-[r?]->(team) " +
+                    "MATCH (person) " +
                     "WHERE 1=1 " +
                     "AND person.name =~ '" + name + "' " +
+                    "OPTIONAL MATCH (person)-[r]->(team) " +
                     "RETURN person, team"
                 );
             }
@@ -125,8 +127,9 @@ public class DatabaseQueryMatchers {
 
                 return cypherStatement.contains(
                     "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":" + personId + "') " +
-                    "MATCH (person)-[r?]->(team) " +
+                    "MATCH (person) " +
                     "WHERE 1=1 " +
+                    "OPTIONAL MATCH (person)-[r]->(team) " +
                     "RETURN person, team"
                 );
             }

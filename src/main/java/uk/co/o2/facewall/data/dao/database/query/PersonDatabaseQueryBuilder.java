@@ -9,12 +9,15 @@ import java.util.Map;
 public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
 
     private final FacewallQueryResultsMapper queryResultsMapper;
-
     private String id = "*";
     private Map<String, String> propertyCriteria = new HashMap<>();
 
     PersonDatabaseQueryBuilder(FacewallQueryResultsMapper queryResultsMapper) {
         this.queryResultsMapper = queryResultsMapper;
+    }
+
+    public DatabaseQuery build() {
+        return new PersonDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }
 
     public PersonDatabaseQueryBuilder withId(PersonId id) {
@@ -25,9 +28,5 @@ public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
     public PersonDatabaseQueryBuilder named(QueryString queryString) {
         propertyCriteria.put("name", queryString.value);
         return this;
-    }
-
-    public DatabaseQuery build() {
-        return new PersonDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }
 }

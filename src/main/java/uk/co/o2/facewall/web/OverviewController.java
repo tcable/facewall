@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import static uk.co.o2.facewall.application.Facewall.facewall;
 
 @Path("/")
-public class OverviewController {
+public class    OverviewController {
     private final OverviewFacade overviewFacade = facewall().overviewFacade;
 
     @GET

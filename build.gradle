@@ -3,7 +3,8 @@ apply plugin: 'war'
 apply plugin: 'tomcat'
 apply plugin: 'java'
 //apply plugin: 'heroku'
-apply plugin: 'application'
+//apply plugin: 'application'
+
 
 buildscript {
     repositories {
@@ -48,6 +49,7 @@ dependencies {
     // end Embedded Tomcat dependencies
 
     def neo4jversion = '2.1.6'
+    compile "org.neo4j:neo4j:${neo4jversion}"
 //    compile "org.neo4j:neo4j-rest-graphdb:1.9"
     compile "org.neo4j:neo4j-jdbc:2.1.4"
     compile "org.neo4j:neo4j-kernel:${neo4jversion}"
@@ -99,7 +101,7 @@ war {
     from 'public'
 }
 
-task ('facewallDeploy', type: Exec, dependsOn:['war'], ) {
+task ('deployFacewall', type: Exec, dependsOn:['war'], ) {
     commandLine 'java' //-jar webapp-runner-7.0.22.jar --port 9000 ./build/libs/facewall.war'
     args = ['-jar', 'webapp-runner-7.0.22.jar', '--port', '9000', 'build/libs/facewall.war']
 }
@@ -200,5 +202,5 @@ task ('stage', dependsOn: ['war']) << {
 //
 //    apiKey = 'my-api-key'
 //}
-mainClassName = "facewall"
-applicationName = "facewall"
+//mainClassName = "facewall"
+//applicationName = "facewall"

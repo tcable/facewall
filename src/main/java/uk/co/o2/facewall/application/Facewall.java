@@ -52,7 +52,8 @@ final public class Facewall {
 
         String graphene_url = System.getenv("GRAPHENEDB_URL");
 //        String graphene_url = "http://app31827831.sb02.stations.graphenedb.com:24789";
-        String db_url = graphene_url == null ? "http://localhost:7474/db/data" : graphene_url + "/db/data";
+//        String db_url = graphene_url == null ? "http://localhost:7474/db/data" : graphene_url + "/db/data";
+        String db_url = graphene_url == null ? "jdbc:neo4j:file:~/neo4j-community-2.1.6/data/graph.db" : graphene_url + "/db/data";
         System.out.println("DB URL: " + db_url);
 
         try {
@@ -61,6 +62,7 @@ final public class Facewall {
             e.printStackTrace();
         }
         JdbcCypherExecutor queryEngine;
+        // http://stackoverflow.com/questions/27005896/neo4j-jdbc-and-embedded-server
         GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(db_url);
         if (graphene_url.isEmpty()) {
             queryEngine = new JdbcCypherExecutor(db_url);
