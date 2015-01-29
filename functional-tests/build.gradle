@@ -22,6 +22,7 @@ test {
     excludes = ["*"]
 }
 
+/*
 task ('defaultSchema', dependsOn:['classes'], type:JavaExec, description:'Insert default schema into database.') {
     if (!dbRunning()) {
       dependsOn ':startDb'
@@ -31,3 +32,4 @@ task ('defaultSchema', dependsOn:['classes'], type:JavaExec, description:'Insert
 }
 
 defaultSchema.mustRunAfter ':startDb'
+*/
