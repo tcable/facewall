@@ -11,10 +11,12 @@ import static org.neo4j.rest.graphdb.GraphDatabaseFactory.databaseFor;
 
 public class InsertFixturesUtility {
 
-    private final static String dbLocation = "http://localhost:7474/db/data";
+    private final static String dbLocation = System.getenv("GRAPHENEDB_URL");
+    private final static String localDbLocation = "http://localhost:7474/db/data";
 
     public static void main(String[] args) {
-        GraphDatabaseService neoDb = databaseFor(dbLocation);
+
+        GraphDatabaseService neoDb = databaseFor(dbLocation==null ? localDbLocation : dbLocation);
         FacewallTestDatabase facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
 
         facewallDb.clear();

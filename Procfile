@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar webapp-runner-7.0.22.jar --port $PORT build/libs/facewall.war

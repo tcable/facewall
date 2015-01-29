@@ -23,8 +23,8 @@ allprojects {
 
 idea {
     project {
-        jdkName = '1.8'
-        languageLevel = '1.8'
+        jdkName = '1.7'
+        languageLevel = '1.7'
         ipr.withXml { provider -> provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git' }
     }
 
@@ -183,3 +183,13 @@ task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],desc
     //dependsOn 'startDb',':functional-tests:defaultSchema'
 }
 
+}
+
+task ('facewallDeploy', type: Exec, dependsOn:['war'], ) {
+    commandLine 'java' //-jar webapp-runner-7.0.22.jar --port 9000 ./build/libs/facewall.war'
+    args = ['-jar', 'webapp-runner-7.0.22.jar', '--port', '9000', 'build/libs/facewall.war']
+}
+
+task ('stage', dependsOn: ['war']) << {
+    println "Running stage"
+}
