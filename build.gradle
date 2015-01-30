@@ -33,7 +33,16 @@ idea {
     }
 }
 
+configurations {
+    runtimeOnly
+}
+
 dependencies {
+
+    // to run facewall on Heroku
+    runtimeOnly "com.github.jsimone:webapp-runner:7.0.22"
+    // monitoring on Heroku
+    runtimeOnly "com.newrelic.agent.java:newrelic-agent:2.18.0"
 
     // start Embedded Tomcat dependencies
     def tomcatVersion = '7.0.50'
@@ -183,11 +192,25 @@ task ('startPopDb', dependsOn:['startDb',':functional-tests:defaultSchema'],desc
     //dependsOn 'startDb',':functional-tests:defaultSchema'
 }
 
-task ('facewallDeploy', type: Exec, dependsOn:['war'], ) {
-    commandLine 'java' //-jar webapp-runner-7.0.22.jar --port 9000 ./build/libs/facewall.war'
-    args = ['-jar', 'webapp-runner-7.0.22.jar', '--port', '9000', 'build/libs/facewall.war']
+// WEBAPP_RUNNER HEROKU STUFF
+
+task copyToLib << {
+    copy {
+        from configurations.runtimeOnly.copy().setTransitive(false)
+        into "$buildDir/libs"
+        rename { name ->
+            def artifacts = configurations.runtimeOnly.resolvedConfiguration.resolvedArtifacts
+            def artifact = artifacts.find { it.file.name == name }
+            "${artifact.name}.${artifact.extension}"
+        }
+    }
 }
 
-task ('stage', dependsOn: ['war']) << {
+task ('facewallDeploy', type: Exec, dependsOn:['war', 'copyToLib'], ) {
+    commandLine 'java' //-jar webapp-runner-7.0.22.jar --port 9000 ./build/libs/facewall.war'
+    args = ['-jar', 'build/libs/webapp-runner.jar', '--port', '9000', 'build/libs/facewall.war']
+}
+
+task ('stage', dependsOn: ['clean', 'war', 'copyToLib']) << {
     println "Running stage"
 }
