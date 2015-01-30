@@ -32,8 +32,7 @@ final public class Facewall {
             PersonDetailsFacade personDetailsFacade,
             TeamDetailsFacade teamDetailsFacade,
             TeamFacade teamFacade,
-            SignUpFacade signUpFacade, UserModelValidator userModelValidator)
-    {
+            SignUpFacade signUpFacade, UserModelValidator userModelValidator) {
         this.overviewFacade = overviewFacade;
         this.searchFacade = searchFacade;
         this.personDetailsFacade = personDetailsFacade;
@@ -49,19 +48,20 @@ final public class Facewall {
 
     private static Facewall createFacewall() {
 
-        String graphene_url = System.getenv("GRAPHENEDB_URL");
-        String app = graphene_url.substring(7,18);
-        String password = graphene_url.substring(19,39);
-        String db_url = graphene_url == null ?  "http://localhost:7474/db/data" : graphene_url + "/db/data";
-
         RestCypherQueryEngine queryEngine;
         GraphDatabaseService graphDatabaseService;
-        if (graphene_url == null) {
-            queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url));
-            graphDatabaseService = databaseFor(db_url);
-        } else {
+
+        String graphene_url = System.getenv("GRAPHENEDB_URL");
+        if (graphene_url != null) {
+            String app = graphene_url.substring(7, 18);
+            String password = graphene_url.substring(19, 39);
+            String db_url = graphene_url + "/db/data";
             queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url, app, password));
             graphDatabaseService = databaseFor(db_url, app, password);
+        } else {
+            String db_url = "http://localhost:7474/db/data";
+            queryEngine = new RestCypherQueryEngine(new RestAPIFacade(db_url));
+            graphDatabaseService = databaseFor(db_url);
         }
 
         DataModule dataModule = createDataModule(queryEngine, graphDatabaseService);
@@ -80,11 +80,11 @@ final public class Facewall {
         TeamFacade teamFacade = new TeamFacade(teamRepository, teamDetailsModelMapper);
 
         SearchFacade searchFacade = new SearchFacade(
-            personRepository,
-            teamRepository,
-            searchResultsModelMapper,
-            personDetailsModelMapper,
-            teamDetailsModelMapper
+                personRepository,
+                teamRepository,
+                searchResultsModelMapper,
+                personDetailsModelMapper,
+                teamDetailsModelMapper
         );
 
         SignUpFacade signUpFacade = new SignUpFacade(
