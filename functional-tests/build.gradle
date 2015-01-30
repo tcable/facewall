@@ -22,7 +22,7 @@ test {
     excludes = ["*"]
 }
 
-// REMOVED FOR FACEWALL
+// << used to fix for heroku
 task ('defaultSchema', dependsOn:['classes'], type:JavaExec, description:'Insert default schema into database.') << {
     if (!dbRunning()) {
       dependsOn ':startDb'
