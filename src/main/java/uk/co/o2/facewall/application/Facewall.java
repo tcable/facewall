@@ -25,6 +25,7 @@ final public class Facewall {
     public final TeamFacade teamFacade;
     public final SignUpFacade signUpFacade;
     public final UserModelValidator userModelValidator;
+    public final LoginFacade loginFacade;
 
     private Facewall(
             OverviewFacade overviewFacade,
@@ -32,7 +33,9 @@ final public class Facewall {
             PersonDetailsFacade personDetailsFacade,
             TeamDetailsFacade teamDetailsFacade,
             TeamFacade teamFacade,
-            SignUpFacade signUpFacade, UserModelValidator userModelValidator) {
+            SignUpFacade signUpFacade,
+            UserModelValidator userModelValidator,
+            LoginFacade loginFacade) {
         this.overviewFacade = overviewFacade;
         this.searchFacade = searchFacade;
         this.personDetailsFacade = personDetailsFacade;
@@ -40,6 +43,7 @@ final public class Facewall {
         this.teamFacade = teamFacade;
         this.signUpFacade = signUpFacade;
         this.userModelValidator = userModelValidator;
+        this.loginFacade = loginFacade;
     }
 
     public static Facewall facewall() {
@@ -93,6 +97,8 @@ final public class Facewall {
                 teamRepository);
         UserModelValidator userModelValidator = new UserModelValidator(teamRepository);
 
-        return new Facewall(overviewFacade, searchFacade, personDetailsFacade, teamDetailsFacade, teamFacade, signUpFacade, userModelValidator);
+        LoginFacade loginFacade = new LoginFacade();
+
+        return new Facewall(overviewFacade, searchFacade, personDetailsFacade, teamDetailsFacade, teamFacade, signUpFacade, userModelValidator, loginFacade);
     }
 }

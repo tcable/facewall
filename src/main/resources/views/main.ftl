@@ -9,7 +9,6 @@
         <link rel="stylesheet" media="screen" href="/assets/css/main.css">
         <script src="/assets/javascripts/jquery-1.9.0.min.js"></script>
     </head>
-    </head>
     <body>
         <div class="jumbotron">
             <div class="container">

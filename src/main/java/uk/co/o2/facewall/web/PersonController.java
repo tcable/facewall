@@ -2,11 +2,18 @@ package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.facade.PersonDetailsFacade;
+import uk.co.o2.facewall.model.OverviewModel;
 import uk.co.o2.facewall.model.PersonDetailsModel;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,9 +27,18 @@ public class PersonController {
 
     @GET
     @Path("/{id}")
-    public Viewable getPerson(@PathParam("id") String id) {
+    public Response getPerson(@PathParam("id") String id, @CookieParam(value = "loggedIn") Cookie loginCookie) {
         final PersonDetailsModel person = personDetailsFacade.createPersonDetailsModel(newPersonId(id));
-
-        return new Viewable("/singleperson.ftl", person);
+        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+            return Response.ok().entity(new Viewable("/singleperson.ftl", person)).build();
+        } else {
+            URI login = null;
+            try {
+                login = new URI("/login");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return Response.seeOther(login).build();
+        }
     }
 }

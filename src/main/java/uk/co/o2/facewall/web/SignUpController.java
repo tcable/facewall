@@ -4,19 +4,22 @@ import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.facade.SignUpFacade;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
+import uk.co.o2.facewall.model.PersonDetailsModel;
 import uk.co.o2.facewall.model.UserModel;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static uk.co.o2.facewall.application.Facewall.facewall;
+import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
 
 @Path("/signup")
 public class SignUpController {
@@ -25,12 +28,21 @@ public class SignUpController {
     private final UserModelValidator userModelValidator = facewall().userModelValidator;
 
     @GET
-    public static Viewable blankSignUpForm() {
-        final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
-        Map<String, Object> model = new HashMap<>();
-        model.put("teamNamesList", teamNamesList);
-
-        return new Viewable("/signupform.ftl", model);
+    public static Response blankSignUpForm(@CookieParam(value = "loggedIn") Cookie loginCookie) {
+        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+            final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
+            Map<String, Object> model = new HashMap<>();
+            model.put("teamNamesList", teamNamesList);
+            return Response.ok().entity(new Viewable("/signupform.ftl", model)).build();
+        } else {
+            URI login = null;
+            try {
+                login = new URI("/login");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return Response.seeOther(login).build();
+        }
     }
 
     @POST
