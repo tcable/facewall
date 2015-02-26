@@ -10,8 +10,9 @@ import java.util.List;
 public class HomePage {
 
     public void navigateToHomePage() {
+        System.out.println(Configuration.baseUrl);
         WebBrowser.navigateTo(Configuration.baseUrl);
-    }
+     }
 
     public RegisterPage clickRegistrationTab() {
         WebBrowser.findElement(By.id("register")).click();

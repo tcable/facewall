@@ -5,13 +5,18 @@ dependencies {
     testCompile project(':facewall-database-utils')
     testCompile "org.neo4j:neo4j-kernel:1.9.8"
     testCompile "org.neo4j:neo4j-rest-graphdb:1.9"
-    testCompile "org.seleniumhq.selenium:selenium-java:2.38.0"
+    testCompile "org.seleniumhq.selenium:selenium-java:2.44.0"
     testCompile "org.hamcrest:hamcrest-all:1.1"
     testCompile "junit:junit:4.11"
     testCompile "org.mockito:mockito-all:1.9.5"
 }
 
-task ('integration', type: Test, dependsOn: ['testClasses',':tomcatDaemonRunWar'], description: 'starts the server as a daemon and runs the functional tests.' +
+task ('integrationRemote', type: Test, dependsOn: ['test'], description: 'starts the server as a daemon and runs the functional tests.' +
+        ' Remember to run gradle clean first') << {
+ //   Outputs.upToDateWhen { false }
+}
+
+task ('integrationLocal', type: Test, dependsOn: [':startDb', ':tomcatDaemonRunWar'], description: 'starts the server as a daemon and runs the functional tests.' +
         ' Remember to run gradle clean first') << {
  //   Outputs.upToDateWhen { false }
 }
@@ -19,7 +24,14 @@ task ('integration', type: Test, dependsOn: ['testClasses',':tomcatDaemonRunWar'
 test {
     outputs.upToDateWhen { false }
     // Excludes functional tests from running during build.
-    excludes = ["*"]
+//    excludes = ["*"]
+    systemProperty 'where', 'remote'
+    systemProperty 'testUrl', 'http://facewalltest.herokuapp.com'
+    println systemProperties
+
+    onOutput { descriptor, event ->
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+    }
 }
 
 // << used to fix for heroku

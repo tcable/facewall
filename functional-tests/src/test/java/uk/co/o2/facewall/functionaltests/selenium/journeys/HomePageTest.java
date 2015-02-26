@@ -6,8 +6,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
+import uk.co.o2.facewall.functionaltests.selenium.common.Configuration;
 import uk.co.o2.facewall.functionaltests.selenium.common.SeleniumBase;
 import uk.co.o2.facewall.functionaltests.selenium.pages.HomePage;
+import uk.co.o2.facewall.functionaltests.selenium.pages.LoginPage;
 
 import static uk.co.o2.facewall.databaseutils.FacewallTestDatabaseFactory.createFacewallTestDatabaseWrappingExistingDatabase;
 import static uk.co.o2.facewall.databaseutils.fixture.Fixtures.newFixtures;
@@ -21,26 +23,33 @@ public class HomePageTest extends SeleniumBase {
     private static GraphDatabaseService neoDb;
     private static FacewallTestDatabase facewallDb;
     private HomePage homePage;
+    private LoginPage loginPage;
 
     @BeforeClass
     public static void beforeClass() {
-        neoDb = databaseFor("http://localhost:7474/db/data/");
-        facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
-        facewallDb.clear();
-        facewallDb.initialise();
-        facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
+        if(Configuration.runNeoDb.equals("local")) {
+            neoDb = databaseFor("http://localhost:7474/db/data/");
+            facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
+            facewallDb.clear();
+            facewallDb.initialise();
+            facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
+        }
     }
 
     @Before
     public void beforeTest() {
         homePage = new HomePage();
         homePage.navigateToHomePage();
+        loginPage = new LoginPage();
+        loginPage.enterLoginDetails();
     }
 
     @AfterClass
     public static void afterTest(){
-        facewallDb.clear();
-        facewallDb.initialise();
+        if(Configuration.runNeoDb.equals("local")) {
+            facewallDb.clear();
+            facewallDb.initialise();
+        }
     }
 
     @Test

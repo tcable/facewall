@@ -3,8 +3,10 @@ package uk.co.o2.facewall.functionaltests.selenium.journeys;
 import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
 import org.junit.*;
 import org.neo4j.graphdb.GraphDatabaseService;
+import uk.co.o2.facewall.functionaltests.selenium.common.Configuration;
 import uk.co.o2.facewall.functionaltests.selenium.common.SeleniumBase;
 import uk.co.o2.facewall.functionaltests.selenium.pages.HomePage;
+import uk.co.o2.facewall.functionaltests.selenium.pages.LoginPage;
 import uk.co.o2.facewall.functionaltests.selenium.pages.RegisterPage;
 
 import static uk.co.o2.facewall.databaseutils.FacewallTestDatabaseFactory.createFacewallTestDatabaseWrappingExistingDatabase;
@@ -19,6 +21,7 @@ public class RegistrationTest extends SeleniumBase {
     private static GraphDatabaseService neoDb;
     private static FacewallTestDatabase facewallDb;
     private HomePage homePage;
+    private LoginPage loginPage;
     private RegisterPage registerPage;
     private static final String NAME = "George Weasley";
     private static final String EMPTY_NAME ="";
@@ -33,26 +36,32 @@ public class RegistrationTest extends SeleniumBase {
 
     @BeforeClass
     public static void beforeClass(){
-        neoDb = databaseFor("http://localhost:7474/db/data/");
-        facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
-        facewallDb.clear();
-        facewallDb.initialise();
-        facewallDb.seedFixtures(newFixtures().withTeams(
-                defaultTeamWithDefaultMembers()
-                        .withProperty("name", "ecom")
-        ));
+        if(Configuration.runNeoDb.equals("local")) {
+            neoDb = databaseFor("http://localhost:7474/db/data/");
+            facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
+            facewallDb.clear();
+            facewallDb.initialise();
+            facewallDb.seedFixtures(newFixtures().withTeams(
+                    defaultTeamWithDefaultMembers()
+                            .withProperty("name", "ecom")
+            ));
+        }
     }
 
     @Before
     public void beforeTest(){
-        facewallDb.clear();
-        facewallDb.initialise();
-        facewallDb.seedFixtures(newFixtures().withTeams(
-                defaultTeamWithDefaultMembers()
-                        .withProperty("name", "ecom")
-        ));
+        if(Configuration.runNeoDb.equals("local")) {
+            facewallDb.clear();
+            facewallDb.initialise();
+            facewallDb.seedFixtures(newFixtures().withTeams(
+                    defaultTeamWithDefaultMembers()
+                            .withProperty("name", "ecom")
+            ));
+        }
         homePage = new HomePage();
         homePage.navigateToHomePage();
+        loginPage = new LoginPage();
+        loginPage.enterLoginDetails();
         //Initial landing on homepage
 
         registerPage = homePage.clickRegistrationTab();
@@ -61,15 +70,19 @@ public class RegistrationTest extends SeleniumBase {
 
     @AfterClass
     public static void afterTest(){
-        facewallDb.clear();
-        facewallDb.initialise();
+        if(Configuration.runNeoDb.equals("local")) {
+            facewallDb.clear();
+            facewallDb.initialise();
+        }
     }
 
 
     @Test
     public void form_has_input_for_teams_when_no_team_in_db() {
-        facewallDb.clear();
-        facewallDb.initialise();
+        if(Configuration.runNeoDb.equals("local")) {
+            facewallDb.clear();
+            facewallDb.initialise();
+        }
         homePage.navigateToHomePage();
         homePage.clickRegistrationTab();
         assertThat(registerPage.getInputTag("team"), is("input"));
