@@ -32,6 +32,10 @@ public class PersonRepository {
         return createPersons(dao.queryPersons(query));
     }
 
+    public List<Person> queryPersonsEmail(Query query) {
+        return createPersons(dao.queryPersonsEmail(query));
+    }
+
     public Person findPersonById(PersonId id) {
         return createPerson(dao.fetchPerson(id));
     }

@@ -26,6 +26,7 @@ final public class Facewall {
     public final SignUpFacade signUpFacade;
     public final UserModelValidator userModelValidator;
     public final LoginFacade loginFacade;
+    public final AccountsFacade accountsFacade;
 
     private Facewall(
             OverviewFacade overviewFacade,
@@ -35,7 +36,8 @@ final public class Facewall {
             TeamFacade teamFacade,
             SignUpFacade signUpFacade,
             UserModelValidator userModelValidator,
-            LoginFacade loginFacade) {
+            LoginFacade loginFacade,
+            AccountsFacade accountsFacade) {
         this.overviewFacade = overviewFacade;
         this.searchFacade = searchFacade;
         this.personDetailsFacade = personDetailsFacade;
@@ -44,6 +46,7 @@ final public class Facewall {
         this.signUpFacade = signUpFacade;
         this.userModelValidator = userModelValidator;
         this.loginFacade = loginFacade;
+        this.accountsFacade = accountsFacade;
     }
 
     public static Facewall facewall() {
@@ -75,6 +78,8 @@ final public class Facewall {
 
         OverviewFacade overviewFacade = new OverviewFacade(personRepository, new OverviewModelMapper());
 
+        AccountsFacade accountsFacade = new AccountsFacade(personRepository);
+
         SearchResultsModelMapper searchResultsModelMapper = new SearchResultsModelMapper();
         PersonDetailsModelMapper personDetailsModelMapper = new PersonDetailsModelMapper();
         TeamDetailsModelMapper teamDetailsModelMapper = new TeamDetailsModelMapper();
@@ -97,8 +102,8 @@ final public class Facewall {
                 teamRepository);
         UserModelValidator userModelValidator = new UserModelValidator(teamRepository);
 
-        LoginFacade loginFacade = new LoginFacade();
+        LoginFacade loginFacade = new LoginFacade(personRepository, accountsFacade);
 
-        return new Facewall(overviewFacade, searchFacade, personDetailsFacade, teamDetailsFacade, teamFacade, signUpFacade, userModelValidator, loginFacade);
+        return new Facewall(overviewFacade, searchFacade, personDetailsFacade, teamDetailsFacade, teamFacade, signUpFacade, userModelValidator, loginFacade, accountsFacade);
     }
 }

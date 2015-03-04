@@ -1,6 +1,7 @@
 package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
+import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.SearchFacade;
 import uk.co.o2.facewall.model.DefaultSearchResultsModel;
 import uk.co.o2.facewall.model.PersonDetailsModel;
@@ -26,10 +27,11 @@ import static uk.co.o2.facewall.domain.Query.newCaseInsensitiveQuery;
 public class SearchController {
 
     private final SearchFacade searchFacade = facewall().searchFacade;
+    private final AccountsFacade accountsFacade = facewall().accountsFacade;
 
     @GET
-    public Response search(@CookieParam(value = "loggedIn") Cookie loginCookie) {
-        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+    public Response search(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
             return Response.ok(new Viewable("/search.ftl")).build();
         } else {
             URI login = null;

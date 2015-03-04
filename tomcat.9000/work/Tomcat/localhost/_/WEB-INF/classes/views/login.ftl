@@ -27,7 +27,7 @@
 
                         <div class="form-group">
                             <label>Email address</label>
-                            <input class="form-control" id="emailLoginForm" type="email" placeholder="Enter email" value="${email!""}" required>
+                            <input class="form-control" type="email" name="email" placeholder="Enter email" value="${email!""}" required>
                         </div>
                         <input id="login" class="btn btn-primary btn-lg btn-block" type="submit" value="Login">
                     </form>

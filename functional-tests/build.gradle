@@ -34,7 +34,7 @@ test {
     }
 }
 
-// << used to fix for heroku
+// You need << to deploy on heroku. Remove << to deploy to local. TODO fix pending
 task ('defaultSchema', dependsOn:['classes'], type:JavaExec, description:'Insert default schema into database.') << {
     if (!dbRunning()) {
       dependsOn ':startDb'

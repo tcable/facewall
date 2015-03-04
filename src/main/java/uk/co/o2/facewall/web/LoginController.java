@@ -1,6 +1,7 @@
 package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
+import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.LoginFacade;
 import uk.co.o2.facewall.facade.OverviewFacade;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
@@ -8,6 +9,7 @@ import uk.co.o2.facewall.model.OverviewModel;
 import uk.co.o2.facewall.model.UserModel;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -26,7 +28,9 @@ import static uk.co.o2.facewall.application.Facewall.facewall;
 
 @Path("/login")
 public class LoginController {
+    private final OverviewFacade overviewFacade = facewall().overviewFacade;
     private static final LoginFacade loginFacade = facewall().loginFacade;
+    private final AccountsFacade accountsFacade = facewall().accountsFacade;
 
     @GET
     public Viewable login() {
@@ -37,7 +41,7 @@ public class LoginController {
     public Response submitLogin(@FormParam("email") String email) {
 
         if(loginFacade.loginSucceeds(email)) {
-            return loginFacade.SuccessfulResponse();
+            return loginFacade.SuccessfulResponse(email);
         } else {
             return loginFacade.FailedResponse(email);
         }

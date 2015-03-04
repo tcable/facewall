@@ -27,6 +27,11 @@ public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
         return this;
     }
 
+    public PersonDatabaseQueryBuilder withEmail(QueryString queryString) {
+          propertyCriteria.put("email", queryString.value);
+          return this;
+    }
+
     public DatabaseQuery build() {
         return new PersonDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }

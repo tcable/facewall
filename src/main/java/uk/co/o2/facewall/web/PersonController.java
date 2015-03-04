@@ -1,6 +1,7 @@
 package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
+import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.PersonDetailsFacade;
 import uk.co.o2.facewall.model.OverviewModel;
 import uk.co.o2.facewall.model.PersonDetailsModel;
@@ -24,12 +25,13 @@ import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
 public class PersonController {
 
     private final PersonDetailsFacade personDetailsFacade = facewall().personDetailsFacade;
+    private final AccountsFacade accountsFacade = facewall().accountsFacade;
 
     @GET
     @Path("/{id}")
-    public Response getPerson(@PathParam("id") String id, @CookieParam(value = "loggedIn") Cookie loginCookie) {
+    public Response getPerson(@PathParam("id") String id, @CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
         final PersonDetailsModel person = personDetailsFacade.createPersonDetailsModel(newPersonId(id));
-        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
             return Response.ok().entity(new Viewable("/singleperson.ftl", person)).build();
         } else {
             URI login = null;

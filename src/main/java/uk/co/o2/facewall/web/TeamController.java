@@ -2,6 +2,7 @@ package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.domain.Query;
+import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.TeamDetailsFacade;
 import uk.co.o2.facewall.facade.TeamFacade;
 import uk.co.o2.facewall.model.PersonDetailsModel;
@@ -27,10 +28,11 @@ public class TeamController {
 
     private final TeamDetailsFacade teamDetailsFacade = facewall().teamDetailsFacade;
     private final TeamFacade teamFacade = facewall().teamFacade;
+    private final AccountsFacade accountsFacade = facewall().accountsFacade;
 
     @GET
-    public Response teamList(@CookieParam(value = "loggedIn") Cookie loginCookie) {
-        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+    public Response teamList(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
             final TeamListModel teamListModel = teamFacade.createTeamListModel();
             return Response.ok().entity(new Viewable("/team.ftl", teamListModel)).build();
         } else {

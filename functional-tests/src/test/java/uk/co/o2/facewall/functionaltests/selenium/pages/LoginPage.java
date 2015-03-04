@@ -10,9 +10,21 @@ import java.util.List;
 public class LoginPage {
 
     public HomePage enterLoginDetails() {
-        WebBrowser.findElement(By.name("email")).sendKeys("person@email.com");
+        WebBrowser.findElement(By.name("email")).sendKeys("doge@veryemail.com");
+        // TODO: add password function
         WebBrowser.findElement(By.id("login")).click();
         return new HomePage();
-
     }
+
+    public HomePage enterInvalidLoginDetails() {
+        WebBrowser.findElement(By.name("email")).sendKeys("doge####@veryemail.com");
+        // TODO: add password function
+        WebBrowser.findElement(By.id("login")).click();
+        return new HomePage();
+    }
+
+    public boolean hasLoginSubmit() {
+        return WebBrowser.findElement(By.id("login")).isDisplayed();
+    }
+
 }

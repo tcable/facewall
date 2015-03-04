@@ -1,6 +1,7 @@
 package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
+import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.SignUpFacade;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
@@ -26,10 +27,11 @@ public class SignUpController {
 
     private static final SignUpFacade signUpFacade = facewall().signUpFacade;
     private final UserModelValidator userModelValidator = facewall().userModelValidator;
+    private final AccountsFacade accountsFacade = facewall().accountsFacade;
 
     @GET
-    public static Response blankSignUpForm(@CookieParam(value = "loggedIn") Cookie loginCookie) {
-        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+    public Response blankSignUpForm(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             Map<String, Object> model = new HashMap<>();
             model.put("teamNamesList", teamNamesList);
