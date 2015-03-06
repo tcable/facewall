@@ -48,8 +48,8 @@ public class TeamController {
 
     @GET
     @Path("/{teamName}")
-    public Response getTeam(@PathParam("teamName") String teamName, @CookieParam(value = "loggedIn") Cookie loginCookie) {
-        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+    public Response getTeam(@PathParam("teamName") String teamName, @CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
             final TeamDetailsWithPersonsModel team = teamDetailsFacade.createTeamDetailsModel(Query.newExactQuery(teamName));
             if (!team.equals(null)) {
                 return Response.ok().entity(new Viewable("/teamdetails.ftl", team)).build();
