@@ -14,7 +14,7 @@ public class PersonDetailsPage {
     }
 
     public Boolean hasEmail(String personEmail){
-        return WebBrowser.elementExists(By.xpath("//*[contains(text(), '" + personEmail + "')]"));
+        return WebBrowser.findElement(By.className("personEmail")).getText().contains(personEmail);
     }
 
     public Boolean hasRole(String personRole){

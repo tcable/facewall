@@ -30,20 +30,11 @@ public class SearchTest extends SeleniumBase {
 
     @BeforeClass
     public static void beforeClass() {
-        if(Configuration.runNeoDb.equals("local")) {
-            neoDb = databaseFor("http://localhost:7474/db/data/");
-            facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
-            facewallDb.clear();
-            facewallDb.initialise();
-        }
+
     }
 
     @Before
     public void beforeTest() {
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.clear();
-            facewallDb.initialise();
-        }
         homePage = new HomePage();
         homePage.navigateToHomePage();  //Initial landing on homepage
         loginPage = new LoginPage();
@@ -53,35 +44,23 @@ public class SearchTest extends SeleniumBase {
 
     @After
     public void afterTest() throws InterruptedException {
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.clear();
-            facewallDb.initialise();
-        }
+
     }
 
     @Test
     public void search_for_team() throws Exception {
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
-        }
         searchResultsPage = searchPage.searchTeam("Ecom Ars");
         assertThat(searchResultsPage.teamExists("Ecom Ars"), is(true));
     }
 
     @Test
      public void no_person_search_results() throws Exception {
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
-        }
         singlePersonSearchResultsPage = searchPage.searchPerson("Norman Cook");
         assertThat(singlePersonSearchResultsPage.personExists("Norman Cook"), is(false));
     }
 
     @Test
     public void no_team_search_results() throws Exception {
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
-        }
         searchResultsPage = searchPage.searchTeam("Team Unknown");
         assertThat(searchResultsPage.teamExists("Team Unknown"), is(false));
     }

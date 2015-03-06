@@ -38,6 +38,8 @@ public class InsertFixturesUtility {
                                         defaultPerson()
                                         .withProperty("name", "Fahran Wallace")
                                         .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
+                                        .withProperty("email", "fahren@veryemail.com")
+                                        .withProperty("role", "Developer")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "so special")

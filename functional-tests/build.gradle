@@ -16,8 +16,7 @@ task ('integrationRemote', type: Test, dependsOn: ['test'], description: 'starts
  //   Outputs.upToDateWhen { false }
 }
 
-task ('integrationLocal', type: Test, dependsOn: [':startDb', ':tomcatDaemonRunWar'], description: 'starts the server as a daemon and runs the functional tests.' +
-        ' Remember to run gradle clean first') << {
+task ('integrationLocal', type: Test, description: 'runs the functional tests against a local running build.') {
  //   Outputs.upToDateWhen { false }
 }
 

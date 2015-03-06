@@ -46,8 +46,8 @@ public class SearchController {
 
     @GET
     @Path("/results")
-    public Response searchResults(@DefaultValue("") @QueryParam("keywords") String keywords, @CookieParam(value = "loggedIn") Cookie loginCookie) {
-        if(loginCookie != null && loginCookie.getValue().equals("cookieValue")) {
+    public Response searchResults(@DefaultValue("") @QueryParam("keywords") String keywords, @CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
             final SearchResultsModel searchResults = searchFacade.createSearchResultsModel(newCaseInsensitiveQuery(keywords));
             //TODO: This looks like scala code that has been translated into java. That's fine, but this kind of java code should be avoided if possible. Hopefully we can design it away.
             Response.ResponseBuilder response = serverError();

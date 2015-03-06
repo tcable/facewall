@@ -27,13 +27,7 @@ public class HomePageTest extends SeleniumBase {
 
     @BeforeClass
     public static void beforeClass() {
-        if(Configuration.runNeoDb.equals("local")) {
-            neoDb = databaseFor("http://localhost:7474/db/data/");
-            facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
-            facewallDb.clear();
-            facewallDb.initialise();
-            facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
-        }
+
     }
 
     @Before
@@ -46,10 +40,7 @@ public class HomePageTest extends SeleniumBase {
 
     @AfterClass
     public static void afterTest(){
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.clear();
-            facewallDb.initialise();
-        }
+
     }
 
     @Test

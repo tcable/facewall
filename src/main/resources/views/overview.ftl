@@ -9,7 +9,7 @@
                     <h5 class="text-center teamName">
                         <a href="/team/${entry.teamHeader}">${entry.teamHeader}</a>
                     </h5>
-                        <a href="/person/${entry.link}">
+                        <a id="${entry.name}" href="/person/${entry.link}">
                             <div class="imgWrapper ${entry.colour}" style="border: 15px solid #${entry.colour}">
                                 <img class="avatar" src="${entry.picture}"/>
                             </div>

@@ -29,35 +29,18 @@ public class RegistrationTest extends SeleniumBase {
     private static final String INVALID_IMGURL = "notaurl";
     private static final String EMAIL = "george@theweasleys.com";
     private static final String INVALID_EMAIL = "notanemail.com";
-    private static final String TEAM = "ecom";
+    private static final String TEAM = "Ecom Ars";
     private static final String SCRUM = "weasleys";
     private static final String ROLE = "Developer";
     private static final String LOCATION = "Bath Road";
 
     @BeforeClass
     public static void beforeClass(){
-        if(Configuration.runNeoDb.equals("local")) {
-            neoDb = databaseFor("http://localhost:7474/db/data/");
-            facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
-            facewallDb.clear();
-            facewallDb.initialise();
-            facewallDb.seedFixtures(newFixtures().withTeams(
-                    defaultTeamWithDefaultMembers()
-                            .withProperty("name", "ecom")
-            ));
-        }
+
     }
 
     @Before
     public void beforeTest(){
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.clear();
-            facewallDb.initialise();
-            facewallDb.seedFixtures(newFixtures().withTeams(
-                    defaultTeamWithDefaultMembers()
-                            .withProperty("name", "ecom")
-            ));
-        }
         homePage = new HomePage();
         homePage.navigateToHomePage();
         loginPage = new LoginPage();
@@ -70,15 +53,13 @@ public class RegistrationTest extends SeleniumBase {
 
     @AfterClass
     public static void afterTest(){
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.clear();
-            facewallDb.initialise();
-        }
+
     }
 
-
+    @Ignore
     @Test
     public void form_has_input_for_teams_when_no_team_in_db() {
+        // TODO Re-enable once register page is outside of cookie script check
         if(Configuration.runNeoDb.equals("local")) {
             facewallDb.clear();
             facewallDb.initialise();

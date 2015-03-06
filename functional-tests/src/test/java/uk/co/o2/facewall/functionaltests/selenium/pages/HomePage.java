@@ -24,8 +24,8 @@ public class HomePage {
         return new SearchPage();
     }
 
-    public PersonDetailsPage clickPerson(String personName) {
-        WebBrowser.findElement(By.linkText(personName)).click();
+    public PersonDetailsPage clickPerson(String name) {
+        WebBrowser.findElement(By.id(name)).click();
         return new PersonDetailsPage();
     }
 
