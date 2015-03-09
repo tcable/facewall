@@ -16,8 +16,6 @@ public class PersonDetailsTest extends SeleniumBase {
     private static final String PERSON_NAME = "Fahran Wallace";
     private static final String EMAIL = "fahren@veryemail.com";
     private static final String ROLE = "Developer";
-    private static GraphDatabaseService neoDb;
-    private static FacewallTestDatabase facewallDb;
     private HomePage homePage;
     private LoginPage loginPage;
     private PersonDetailsPage personDetailsPage;

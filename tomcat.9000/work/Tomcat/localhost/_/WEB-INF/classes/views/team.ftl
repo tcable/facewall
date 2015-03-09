@@ -5,7 +5,7 @@
         <#if entries?has_content>
             <div class="row">
                 <#list entries as entry>
-                    <div class="col-md-3 col-sm-4 entry">
+                    <div class="col-md-3 col-sm-4 entry" data-qa-team-name="${entry.name}">
                         <h5 class="text-center teamName">
                             <a style="color: #${entry.colour}" href="/team/${entry.name}">${entry.name}</a>
                         </h5>

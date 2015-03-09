@@ -19,6 +19,11 @@ public class HomePage {
         return new RegisterPage();
     }
 
+    public TeamListPage clickTeamTab() {
+        WebBrowser.findElement(By.id("teams")).click();
+        return new TeamListPage();
+    }
+
     public SearchPage clickSearchTab() {
         WebBrowser.findElement(By.id("search")).click();
         return new SearchPage();

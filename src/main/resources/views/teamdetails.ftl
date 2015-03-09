@@ -14,7 +14,7 @@
         <#if entries?has_content>
             <div class="row">
                 <#list entries as entry>
-                    <div class="col-md-3 col-sm-4 entry">
+                    <div data-qa-person-name="${entry.name}" class="col-md-3 col-sm-4 entry">
                         <a href="/person/${entry.link}">
                             <div class="imgWrapper ${entry.colour}" style="border: 15px solid #${entry.colour}">
                                 <img class="avatar" src="${entry.picture}"/>
