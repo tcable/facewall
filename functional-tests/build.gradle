@@ -11,12 +11,11 @@ dependencies {
     testCompile "org.mockito:mockito-all:1.9.5"
 }
 
-task ('integrationRemote', type: Test, dependsOn: ['test'], description: 'starts the server as a daemon and runs the functional tests.' +
-        ' Remember to run gradle clean first') << {
+task ('integrationRemote', dependsOn: ['test'], description: 'runs functional tests against facewalltest.herokuapp.com') << {
  //   Outputs.upToDateWhen { false }
 }
 
-task ('integrationLocal', type: Test, description: 'runs the functional tests against a local running build.') {
+task ('integrationLocal', type: Test, description: 'runs functional tests against local build') {
  //   Outputs.upToDateWhen { false }
 }
 
