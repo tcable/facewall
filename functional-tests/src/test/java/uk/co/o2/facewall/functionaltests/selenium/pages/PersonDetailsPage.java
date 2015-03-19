@@ -6,7 +6,7 @@ import uk.co.o2.facewall.functionaltests.selenium.common.WebBrowser;
 public class PersonDetailsPage {
 
     public String getPersonName() {
-        return WebBrowser.findElementWithFluidWait(By.className("personName")).getText();
+        return WebBrowser.findElementWithFluentWait(By.className("personName")).getText();
     }
 
     public Boolean imageExists() {

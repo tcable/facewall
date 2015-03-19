@@ -1,25 +1,18 @@
 package uk.co.o2.facewall.functionaltests.selenium.journeys;
 
-import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
-import org.junit.*;
-import org.neo4j.graphdb.GraphDatabaseService;
-import uk.co.o2.facewall.functionaltests.selenium.common.Configuration;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import uk.co.o2.facewall.functionaltests.selenium.common.SeleniumBase;
 import uk.co.o2.facewall.functionaltests.selenium.pages.HomePage;
 import uk.co.o2.facewall.functionaltests.selenium.pages.LoginPage;
 import uk.co.o2.facewall.functionaltests.selenium.pages.RegisterPage;
 
-import static uk.co.o2.facewall.databaseutils.FacewallTestDatabaseFactory.createFacewallTestDatabaseWrappingExistingDatabase;
-import static uk.co.o2.facewall.databaseutils.fixture.Fixtures.newFixtures;
-import static uk.co.o2.facewall.databaseutils.fixture.TeamDataFactory.defaultTeamWithDefaultMembers;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.neo4j.rest.graphdb.GraphDatabaseFactory.databaseFor;
 
 public class RegistrationTest extends SeleniumBase {
 
-    private static GraphDatabaseService neoDb;
-    private static FacewallTestDatabase facewallDb;
     private HomePage homePage;
     private LoginPage loginPage;
     private RegisterPage registerPage;
@@ -34,36 +27,19 @@ public class RegistrationTest extends SeleniumBase {
     private static final String ROLE = "Developer";
     private static final String LOCATION = "Bath Road";
 
-    @BeforeClass
-    public static void beforeClass(){
-
-    }
-
     @Before
     public void beforeTest(){
         homePage = new HomePage();
         homePage.navigateToHomePage();
         loginPage = new LoginPage();
         loginPage.enterLoginDetails();
-        //Initial landing on homepage
-
         registerPage = homePage.clickRegistrationTab();
-        //Now on registration page
     }
 
-    @AfterClass
-    public static void afterTest(){
-
-    }
-
+    // TODO Re-enable once register page is outside of cookie script check
     @Ignore
     @Test
     public void form_has_input_for_teams_when_no_team_in_db() {
-        // TODO Re-enable once register page is outside of cookie script check
-        if(Configuration.runNeoDb.equals("local")) {
-            facewallDb.clear();
-            facewallDb.initialise();
-        }
         homePage.navigateToHomePage();
         homePage.clickRegistrationTab();
         assertThat(registerPage.getInputTag("team"), is("input"));
@@ -76,30 +52,6 @@ public class RegistrationTest extends SeleniumBase {
 
     @Test
     public void can_complete_register_user_journey() {
-        //Fill in form
-        registerPage.enterFieldInForm("name", NAME);
-        registerPage.enterFieldInForm("imgUrl", IMGURL);
-        registerPage.enterFieldInForm("email", EMAIL);
-        registerPage.selectDropdown("team", TEAM);
-        registerPage.enterFieldInForm("scrum", SCRUM);
-        registerPage.selectDropdown("role", ROLE);
-        registerPage.selectDropdown("location", LOCATION);
-        registerPage.clickSubmit();
-
-        //Check all details submitted are returned
-        assertThat(registerPage.getSummaryItem("name"), is(NAME));
-        assertThat(registerPage.getSummaryItem("imgUrl"), is(IMGURL));
-        assertThat(registerPage.getSummaryItem("email"), is(EMAIL));
-        assertThat(registerPage.getSummaryItem("team"), is(TEAM));
-        assertThat(registerPage.getSummaryItem("role"), is(ROLE));
-
-        //Go to overview to check person is showing
-        homePage.navigateToHomePage();
-        assertThat(homePage.personExists(NAME, TEAM, IMGURL), is(true));
-    }
-
-    @Test
-    public void sign_up_summary_displays_inputted_data() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgUrl", IMGURL);
@@ -139,6 +91,7 @@ public class RegistrationTest extends SeleniumBase {
         //Go to overview to check person is not showing
         homePage.navigateToHomePage();
         assertThat(homePage.personExists(NAME, TEAM, INVALID_EMAIL), is(false));
+        //TODO Check for presence of error messages on page
     }
 
     @Test
@@ -158,6 +111,7 @@ public class RegistrationTest extends SeleniumBase {
         //Go to overview to check person is not showing
         homePage.navigateToHomePage();
         assertThat(homePage.personExists(NAME, TEAM, INVALID_IMGURL), is(false));
+        //TODO Check for presence of error messages on page
     }
 
     @Test
@@ -177,6 +131,7 @@ public class RegistrationTest extends SeleniumBase {
         //Go to overview to check person is not showing
         homePage.navigateToHomePage();
         assertThat(homePage.personExists(NAME, TEAM, INVALID_IMGURL), is(false));
+        //TODO Check for presence of error messages on page
     }
 
 }

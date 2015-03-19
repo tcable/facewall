@@ -11,18 +11,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TeamListTest extends SeleniumBase {
 
-    private HomePage homePage;
-    private LoginPage loginPage;
-    private TeamListPage teamListPage;
-
     @Test
     public void teams_on_page() {
-        homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.navigateToHomePage();
-        loginPage = new LoginPage();
-        homePage =  loginPage.enterLoginDetails();  // initial landing on homepage
-        teamListPage = homePage.clickTeamTab(); //click team list tab
+        LoginPage loginPage = new LoginPage();
+        homePage =  loginPage.enterLoginDetails();
+        TeamListPage teamListPage = homePage.clickTeamTab();
 
-        assertThat(teamListPage.findAndMatchTeam("OPP"), is(true));
+        assertThat(teamListPage.isOnPageForTeam("OPP"), is(true));
     }
 }

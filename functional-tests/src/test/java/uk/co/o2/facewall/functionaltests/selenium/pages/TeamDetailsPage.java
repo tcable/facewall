@@ -9,13 +9,13 @@ import java.util.List;
 public class TeamDetailsPage {
 
 
-    public Boolean findAndMatchName(String teamName) {
+    public Boolean isOnPageForTeam(String teamName) {
         WebElement Name = WebBrowser.findElement(By.xpath("/html/body/div[2]/div[1]/div/div/h1"));
         // TODO: no xpath
         return Name.getText().equals(teamName);
     }
 
-    public Boolean findAndMatchPerson(String personName) {
+    public Boolean personIsInTeam(String personName) {
         List<WebElement> personArray = WebBrowser.findElements(By.className("entry"));
 
         boolean result = false;

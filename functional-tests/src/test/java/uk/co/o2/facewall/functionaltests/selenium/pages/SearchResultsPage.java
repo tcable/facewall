@@ -13,7 +13,7 @@ public class SearchResultsPage {
     }
 
     public Boolean hasNoResultsMessage() {
-        if(WebBrowser.findElementWithFluidWait(By.className("no-results")).isDisplayed()) {
+        if(WebBrowser.findElementWithFluentWait(By.className("no-results")).isDisplayed()) {
             return true;
         }
         return false;

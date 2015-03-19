@@ -10,7 +10,7 @@
     <body>
         <div class="jumbotron">
             <div class="container">
-                <h1 id="homeTitle" class="text-center">
+                <h1 id="loginTitle" class="text-center">
                     <img class="smiley" src="/assets/images/smiley_happy.png"/>Facewall
                 </h1>
             </div>

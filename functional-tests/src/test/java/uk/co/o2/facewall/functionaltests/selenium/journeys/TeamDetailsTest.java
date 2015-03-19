@@ -10,9 +10,6 @@ import uk.co.o2.facewall.functionaltests.selenium.pages.TeamListPage;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by tom on 06/03/15.
- */
 public class TeamDetailsTest extends SeleniumBase{
 
     private HomePage homePage;
@@ -29,7 +26,7 @@ public class TeamDetailsTest extends SeleniumBase{
         teamListPage = homePage.clickTeamTab(); //click team list tab
         teamDetailsPage = teamListPage.clickOPPTeam(); //click through to team details page
 
-        assertThat(teamDetailsPage.findAndMatchName("OPP"), is(true));
-        assertThat(teamDetailsPage.findAndMatchPerson("Stuart Gray"), is(true));
+        assertThat(teamDetailsPage.isOnPageForTeam("OPP"), is(true));
+        assertThat(teamDetailsPage.personIsInTeam("Stuart Gray"), is(true));
     }
 }

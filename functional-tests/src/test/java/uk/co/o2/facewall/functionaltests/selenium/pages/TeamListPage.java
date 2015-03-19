@@ -13,7 +13,7 @@ public class TeamListPage {
         return new TeamDetailsPage();
     }
 
-    public boolean findAndMatchTeam(String teamName) {
+    public boolean isOnPageForTeam(String teamName) {
         List<WebElement> teamArray = WebBrowser.findElements(By.className("entry"));
 
         boolean result = false;

@@ -19,13 +19,13 @@
                         <h5 class="text-center teamName">
                             <a href="/team/${result.teamName}">${result.teamName}</a>
                         </h5>
-                        <a href="/facewall/person/${result.link}">
+                        <a href="/person/${result.link}">
                             <div class="imgWrapper ${result.colour}" style="border: 15px solid #${result.colour}">
                                 <img class="avatar" src="${result.picture}"/>
                             </div>
                         </a>
                         <h3 class="text-center entryName">
-                            <a href="/facewall/person/${result.link}">${result.name}</a>
+                            <a href="/person/${result.link}">${result.name}</a>
                         </h3>
                     </div>
                 </#list>
@@ -40,7 +40,7 @@
                 <#list teams as result>
                     <div class="col-md-4 col-md-offset-4 team-entry">
                         <div style="border: 10px solid #${result.colour};" class="thumbnail">
-                            <h3 class="text-center"><a href="/facewall/team/${result.name}">${result.name}</a></h3>
+                            <h3 class="text-center"><a href="/team/${result.name}">${result.name}</a></h3>
                         </div>
                     </div>
                 </#list>
