@@ -1,11 +1,11 @@
-<#import 'main.ftl' as main>
+<#import 'mainDoor.ftl' as main>
 
-<@main.main title = "Input your details" activeTabIndex = 3>
+<@main.main title = "Input your details" activeTabIndex = 1>
 
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form">
-            <form role="form" method="post" action="/signup">
+            <form role="form" method="post" action="/register">
                 <div class="form-group">
                     <#if (errors["personInformation.name"])??>
                         <div class="alert alert-danger">

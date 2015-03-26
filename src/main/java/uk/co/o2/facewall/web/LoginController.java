@@ -28,13 +28,22 @@ import static uk.co.o2.facewall.application.Facewall.facewall;
 
 @Path("/login")
 public class LoginController {
-    private final OverviewFacade overviewFacade = facewall().overviewFacade;
     private static final LoginFacade loginFacade = facewall().loginFacade;
     private final AccountsFacade accountsFacade = facewall().accountsFacade;
 
     @GET
-    public Viewable login() {
-        return new Viewable("/login.ftl");
+    public Response login(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
+        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
+            URI homepage = null;
+            try {
+                homepage = new URI("/");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return Response.seeOther(homepage).build();
+        } else {
+            return Response.ok().entity(new Viewable("/login.ftl")).build();
+        }
     }
 
     @POST

@@ -5,6 +5,7 @@ import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.SignUpFacade;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
+import uk.co.o2.facewall.model.OverviewModel;
 import uk.co.o2.facewall.model.PersonDetailsModel;
 import uk.co.o2.facewall.model.UserModel;
 
@@ -22,7 +23,7 @@ import java.util.Map;
 import static uk.co.o2.facewall.application.Facewall.facewall;
 import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
 
-@Path("/signup")
+@Path("/register")
 public class SignUpController {
 
     private static final SignUpFacade signUpFacade = facewall().signUpFacade;
@@ -32,24 +33,24 @@ public class SignUpController {
     @GET
     public Response blankSignUpForm(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
         if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
+            URI homepage = null;
+            try {
+                homepage = new URI("/");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return Response.seeOther(homepage).build();
+        } else {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             Map<String, Object> model = new HashMap<>();
             model.put("teamNamesList", teamNamesList);
             return Response.ok().entity(new Viewable("/signupform.ftl", model)).build();
-        } else {
-            URI login = null;
-            try {
-                login = new URI("/login");
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            return Response.seeOther(login).build();
         }
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Viewable submitSignUpForm(@FormParam("name") String name,
+    public Response submitSignUpForm(@FormParam("name") String name,
                                      @FormParam("imgUrl") String imgUrl,
                                      @FormParam("email") String email,
                                      @FormParam("team") String team,
@@ -68,10 +69,15 @@ public class SignUpController {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             model.put("teamNamesList", teamNamesList);
             model.put("errors", validatedUserModel.getErrors());
-            return new Viewable("/signupform.ftl", model);
+            Viewable existing = new Viewable("/signupform.ftl",model);
+            Response.ResponseBuilder response = Response.ok().entity(existing);
+            return response.build();
         } else {
             signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
-            return new Viewable("/signupsummary.ftl", model);
+            Viewable existing = new Viewable("/signupsummary.ftl",model);
+            NewCookie loginCookie = new NewCookie("facewallLoggedIn",email);
+            Response.ResponseBuilder response = Response.ok().entity(existing).cookie(loginCookie);
+            return response.build();
         }
     }
 }

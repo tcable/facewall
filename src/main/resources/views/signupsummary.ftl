@@ -1,6 +1,6 @@
 <#import 'main.ftl' as main>
 
-<@main.main title = "${personInformation.name}'s details" activeTabIndex = 2>
+<@main.main title = "${personInformation.name}'s details" activeTabIndex = 3>
     
     <div class="container">
         <div class="row">

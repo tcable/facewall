@@ -17,9 +17,8 @@
                 </h1>
 
                 <ul class="nav nav-tabs nav-justified">
-                    <li><a id="home" href="/">Overview</a></li>
-                    <li><a id="teams" href="/team">Teams</a></li>
-                    <li><a id="search" href="/search">Search</a></li>
+                    <li><a id="login" href="/login">Login</a></li>
+                    <li><a id="register" href="/register">Register</a></li>
                 </ul>
             </div>
         </div>
