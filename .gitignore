@@ -21,5 +21,3 @@ target/
 .gradle/
 build/
 neo4jDB/
-tomcat.8080
-tomcat.9000
