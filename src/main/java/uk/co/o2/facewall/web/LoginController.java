@@ -3,22 +3,13 @@ package uk.co.o2.facewall.web;
 import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.LoginFacade;
-import uk.co.o2.facewall.facade.OverviewFacade;
-import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
-import uk.co.o2.facewall.model.OverviewModel;
-import uk.co.o2.facewall.model.UserModel;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static uk.co.o2.facewall.application.Facewall.facewall;
 
@@ -33,7 +24,7 @@ public class LoginController {
 
     @GET
     public Response login(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
-        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
+        if(loginCookie != null && accountsFacade.isMatching(loginCookie.getValue())) {
             URI homepage = null;
             try {
                 homepage = new URI("/");

@@ -32,6 +32,11 @@ public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
           return this;
     }
 
+    public PersonDatabaseQueryBuilder withScrum(QueryString queryString) {
+          propertyCriteria.put("scrum", queryString.value);
+          return this;
+    }
+
     public DatabaseQuery build() {
         return new PersonDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }

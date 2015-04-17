@@ -3,10 +3,13 @@ package uk.co.o2.facewall.facade.validators;
 import uk.co.o2.facewall.data.TeamRepository;
 import uk.co.o2.facewall.data.dto.PersonInformation;
 import uk.co.o2.facewall.domain.Team;
+import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.model.UserModel;
 
+import java.util.InputMismatchException;
 import java.util.List;
 
+import static uk.co.o2.facewall.application.Facewall.facewall;
 import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
 import static uk.co.o2.facewall.domain.NoTeam.noTeam;
 import static uk.co.o2.facewall.domain.Query.newExactQuery;
@@ -45,6 +48,7 @@ public class UserModelValidator {
                 .withPicture(userModel.imgUrl)
                 .withEmail(userModel.email)
                 .withRole(userModel.role)
+                .withScrum(userModel.scrum)
                 //.withLocation(userModel.location)
                 //.withScrum(userModel.scrum)
                 .build();

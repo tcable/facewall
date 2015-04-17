@@ -15,6 +15,7 @@ public class PersonDetailsTest extends SeleniumBase {
     private static final String PERSON_NAME = "Fahran Wallace";
     private static final String EMAIL = "fahren@veryemail.com";
     private static final String ROLE = "Developer";
+    private static final String TEAM = "Ecom Ars";
     private HomePage homePage;
     private LoginPage loginPage;
     private PersonDetailsPage personDetailsPage;
@@ -53,6 +54,13 @@ public class PersonDetailsTest extends SeleniumBase {
         personDetailsPage = homePage.clickPerson(PERSON_NAME);
 
         assertThat(personDetailsPage.hasRole(ROLE), is(true));
+    }
+
+    @Test
+    public void person_has_a_team() {
+        personDetailsPage = homePage.clickPerson(PERSON_NAME);
+
+        assertThat(personDetailsPage.hasTeam(TEAM), is(true));
     }
 
 }

@@ -2,16 +2,12 @@ package uk.co.o2.facewall.facade;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.data.PersonRepository;
-import uk.co.o2.facewall.domain.Person;
-import uk.co.o2.facewall.domain.Query;
 
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +26,7 @@ public class LoginFacade {
         // check the db for matching email
         // if present return true
 
-        return accountsFacade.isAuthenticated(email);
+        return accountsFacade.isMatching(email);
     }
 
     public Response SuccessfulResponse(String email) {

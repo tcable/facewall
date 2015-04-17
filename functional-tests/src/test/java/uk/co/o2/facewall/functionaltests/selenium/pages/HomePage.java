@@ -14,11 +14,6 @@ public class HomePage {
         WebBrowser.navigateTo(Configuration.baseUrl);
      }
 
-    public RegisterPage clickRegistrationTab() {
-        WebBrowser.findElement(By.id("register")).click();
-        return new RegisterPage();
-    }
-
     public TeamListPage clickTeamTab() {
         WebBrowser.findElement(By.id("teams")).click();
         return new TeamListPage();

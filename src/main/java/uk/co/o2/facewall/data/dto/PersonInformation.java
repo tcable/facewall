@@ -26,6 +26,8 @@ public class PersonInformation {
     @NotBlank(message = "Picture must not be blank")
     @URL(message = "The URL is invalid")
     private final String picture;
+    @NotBlank(message = "Scrum must not be blank")
+    private final String scrum;
 
 
     private PersonInformation(Builder builder) {
@@ -34,6 +36,7 @@ public class PersonInformation {
         picture = builder.picture;
         email = builder.email;
         role = builder.role;
+        scrum = builder.scrum;
     }
 
     public static Builder newPersonInformation() {
@@ -64,12 +67,17 @@ public class PersonInformation {
         return role;
     }
 
+    public String getScrum(){
+        return scrum;
+    }
+
     public static class Builder {
         private PersonId id = noPersonId();
         private String name = "";
         private String picture = "";
         private String email = "";
         private String role = "";
+        private String scrum = "";
 
         public PersonInformation build() {
             return new PersonInformation(this);
@@ -97,6 +105,11 @@ public class PersonInformation {
 
         public Builder withRole(String role) {
             this.role = role;
+            return this;
+        }
+
+        public Builder withScrum(String scrum) {
+            this.scrum = scrum;
             return this;
         }
     }

@@ -12,8 +12,6 @@ import javax.ws.rs.core.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Date;
-import java.util.List;
 
 import static uk.co.o2.facewall.application.Facewall.facewall;
 
@@ -24,7 +22,7 @@ public class OverviewController {
 
     @GET
     public Response overview(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
-        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
+        if(loginCookie != null && accountsFacade.isMatching(loginCookie.getValue())) {
             OverviewModel model = overviewFacade.createOverviewModel();
             return Response.ok().entity(new Viewable("/overview.ftl", model)).build();
         } else {

@@ -29,6 +29,11 @@ public class PersonMapper {
             }
 
             @Override
+            public String scrum() {
+                return userModel.scrum;
+            }
+
+            @Override
             public Team team() {
                 return team;
             }

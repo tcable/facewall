@@ -31,6 +31,7 @@ public class InsertFixturesUtility {
                                         .withProperty("name", "Hugo Wainwright")
                                         .withProperty("picture", "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
                                         .withProperty("role", "Developer")
+                                        .withProperty("scrum", "BAU")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "Ecom Ars")
@@ -39,7 +40,7 @@ public class InsertFixturesUtility {
                                         .withProperty("name", "Fahran Wallace")
                                         .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
                                         .withProperty("email", "fahren@veryemail.com")
-                                        .withProperty("role", "Developer")
+                                        .withProperty("scrum", "BAU2")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "so special")
@@ -69,7 +70,8 @@ public class InsertFixturesUtility {
                                         .withProperty("picture", "http://hd.wallpaperswide.com/thumbs/adventure_time___jake-t2.jpg"),
                                         defaultPerson()
                                         .withProperty("name", "Tom (Eric) Cable")
-                                        .withProperty("picture", "http://i.imgur.com/DC5FsXv.jpg"),
+                                        .withProperty("picture", "http://i.imgur.com/DC5FsXv.jpg")
+                                        .withProperty("scrum", "BAU"),
                                         defaultPerson()
                                         .withProperty("name", "Ecom Test")
                                         .withProperty("picture", "http://i.imgur.com/DC5FsXv.jpg")

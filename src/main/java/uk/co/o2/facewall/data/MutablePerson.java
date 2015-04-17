@@ -38,6 +38,10 @@ class MutablePerson implements Person {
         return team;
     }
 
+    @Override final public String scrum() {
+        return personInformation.getScrum();
+    }
+
     public void setTeam(Team team) {
         this.team = team;
     }

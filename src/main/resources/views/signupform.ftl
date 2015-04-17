@@ -5,6 +5,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form">
+            <#if (statusError)??>
+                <div class="status error">
+                    <h5>${statusError}</h5>
+                </div>
+            </#if>
             <form role="form" method="post" action="/register">
                 <div class="form-group">
                     <#if (errors["personInformation.name"])??>

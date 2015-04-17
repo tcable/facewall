@@ -21,6 +21,7 @@ public class RegistrationTest extends SeleniumBase {
     private static final String IMGURL = "http://theweasleys.com/george.jpg";
     private static final String INVALID_IMGURL = "notaurl";
     private static final String EMAIL = "george@theweasleys.com";
+    private static final String EXISTING_EMAIL = "doge@veryemail.com";
     private static final String INVALID_EMAIL = "notanemail.com";
     private static final String TEAM = "Ecom Ars";
     private static final String SCRUM = "weasleys";
@@ -32,16 +33,11 @@ public class RegistrationTest extends SeleniumBase {
         homePage = new HomePage();
         homePage.navigateToHomePage();
         loginPage = new LoginPage();
-        loginPage.enterLoginDetails();
-        registerPage = homePage.clickRegistrationTab();
+        registerPage = loginPage.clickRegistrationTab();
     }
 
-    // TODO Re-enable once register page is outside of cookie script check
-    @Ignore
     @Test
     public void form_has_input_for_teams_when_no_team_in_db() {
-        homePage.navigateToHomePage();
-        homePage.clickRegistrationTab();
         assertThat(registerPage.getInputTag("team"), is("input"));
     }
 
@@ -72,6 +68,23 @@ public class RegistrationTest extends SeleniumBase {
         //Go to overview to check person is showing
         homePage.navigateToHomePage();
         assertThat(homePage.personExists(NAME, TEAM, IMGURL), is(true));
+    }
+
+    @Test
+    public void form_rejects_existing_email() {
+        //Fill in form
+        registerPage.enterFieldInForm("name", NAME);
+        registerPage.enterFieldInForm("imgUrl", IMGURL);
+        registerPage.enterFieldInForm("email", EXISTING_EMAIL);
+        registerPage.selectDropdown("team", TEAM);
+        registerPage.enterFieldInForm("scrum", SCRUM);
+        registerPage.selectDropdown("role", ROLE);
+        registerPage.selectDropdown("location", LOCATION);
+        registerPage.clickSubmit();
+
+        //Assert that user has encountered an error is is still on registration page
+        assertThat(registerPage.getTitle(), is("Facewall | Input your details"));
+        assertThat(registerPage.getExistingEmailError(), is(EXISTING_EMAIL + " has already been used. Please use a different one."));
     }
 
     @Test

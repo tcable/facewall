@@ -24,8 +24,16 @@ public class RegisterPage {
         return WebBrowser.findElement(By.className(className)).getText();
     }
 
+    public String getTitle() {
+        return WebBrowser.getTitle();
+    }
+
+    public String getExistingEmailError() {
+        return WebBrowser.findElement(By.cssSelector(".status.error h5")).getText();
+    }
+
     public boolean onRegistrationPage() {
-        return WebBrowser.getUrl().matches(".*\\/signup");
+        return WebBrowser.getUrl().matches(".*\\/register");
     }
 
     public String getInputTag(String fieldName) {

@@ -61,6 +61,14 @@ abstract public class PersonDataFactory {
         "Outcast"
     );
 
+    private static final List<String> scrums = asList(
+        "BAU",
+        "BAU2",
+        "BAU3",
+        "BAU4",
+        "BAU5"
+    );
+
 
     private PersonDataFactory() {
     }
@@ -78,13 +86,15 @@ abstract public class PersonDataFactory {
         final String name = randomName();
         final String email = emailFromName(name);
         final String role = randomRole();
+        final String scrum = randomScrum();
 
         return newPersonData()
             .withProperty("id", randomUUID().toString())
             .withProperty("name", name)
             .withProperty("picture", "http://dummyimage.com/200x200/000/fff.png&text=" + name)
             .withProperty("email", email)
-            .withProperty("role", role);
+            .withProperty("role", role)
+            .withProperty("scrum", scrum);
     }
 
     private static String randomRole() {
@@ -96,6 +106,11 @@ abstract public class PersonDataFactory {
         String firstName = firstNames.get(randomInt(firstNames.size()));
         String lastName = lastNames.get(randomInt(lastNames.size()));
         return firstName + " " + lastName;
+    }
+
+    private static String randomScrum() {
+        String scrum = scrums.get(randomInt(scrums.size()));
+        return scrum;
     }
 
     private static int randomInt(int bound) {

@@ -20,4 +20,8 @@ public class PersonDetailsPage {
     public Boolean hasRole(String personRole){
         return WebBrowser.elementExists(By.xpath("//*[contains(text(), '" + personRole + "')]"));
     }
+
+    public Boolean hasTeam(String teamName){
+        return WebBrowser.elementExists(By.xpath("//*[contains(text(), '" + teamName + "')]"));
+    }
 }

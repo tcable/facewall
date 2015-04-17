@@ -23,6 +23,11 @@ public class LoginPage {
         return new HomePage();
     }
 
+    public RegisterPage clickRegistrationTab() {
+        WebBrowser.findElement(By.id("register")).click();
+        return new RegisterPage();
+    }
+
     public boolean hasLoginSubmit() {
         return WebBrowser.findElement(By.id("login")).isDisplayed();
     }

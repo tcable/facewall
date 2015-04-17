@@ -48,6 +48,13 @@ form[role=form] .submit{
     top: 3px;
 }
 
+.status {
+    padding:2%;
+    margin-bottom:3%;
+    text-align:center;
+    border: 1px solid black;
+}
+
 /* Search */
 
 .results-counter {

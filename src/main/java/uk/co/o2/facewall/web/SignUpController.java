@@ -5,8 +5,6 @@ import uk.co.o2.facewall.facade.AccountsFacade;
 import uk.co.o2.facewall.facade.SignUpFacade;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
-import uk.co.o2.facewall.model.OverviewModel;
-import uk.co.o2.facewall.model.PersonDetailsModel;
 import uk.co.o2.facewall.model.UserModel;
 
 import javax.ws.rs.*;
@@ -21,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import static uk.co.o2.facewall.application.Facewall.facewall;
-import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
 
 @Path("/register")
 public class SignUpController {
@@ -29,10 +26,11 @@ public class SignUpController {
     private static final SignUpFacade signUpFacade = facewall().signUpFacade;
     private final UserModelValidator userModelValidator = facewall().userModelValidator;
     private final AccountsFacade accountsFacade = facewall().accountsFacade;
+    private String errorStatus = "";
 
     @GET
     public Response blankSignUpForm(@CookieParam(value = "facewallLoggedIn") Cookie loginCookie) {
-        if(loginCookie != null && accountsFacade.isAuthenticated(loginCookie.getValue())) {
+        if(loginCookie != null && accountsFacade.isMatching(loginCookie.getValue())) {
             URI homepage = null;
             try {
                 homepage = new URI("/");
@@ -44,6 +42,7 @@ public class SignUpController {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             Map<String, Object> model = new HashMap<>();
             model.put("teamNamesList", teamNamesList);
+            //model.put("statusError", errorStatus);
             return Response.ok().entity(new Viewable("/signupform.ftl", model)).build();
         }
     }
@@ -65,18 +64,29 @@ public class SignUpController {
         model.put("personInformation", validatedUserModel.getPersonInformation());
         model.put("team", validatedUserModel.getTeam());
 
-        if (validatedUserModel.hasErrors()) {
+        if(!accountsFacade.isMatching(email)) {
+            if (validatedUserModel.hasErrors()) {
+                final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
+                model.put("teamNamesList", teamNamesList);
+                model.put("errors", validatedUserModel.getErrors());
+                //model.put("statusError", errorStatus);
+                Viewable existing = new Viewable("/signupform.ftl", model);
+                Response.ResponseBuilder response = Response.ok().entity(existing);
+                return response.build();
+            } else {
+                signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
+                Viewable existing = new Viewable("/signupsummary.ftl", model);
+                NewCookie loginCookie = new NewCookie("facewallLoggedIn", email);
+                Response.ResponseBuilder response = Response.ok().entity(existing).cookie(loginCookie);
+                return response.build();
+            }
+        } else {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             model.put("teamNamesList", teamNamesList);
-            model.put("errors", validatedUserModel.getErrors());
-            Viewable existing = new Viewable("/signupform.ftl",model);
-            Response.ResponseBuilder response = Response.ok().entity(existing);
-            return response.build();
-        } else {
-            signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
-            Viewable existing = new Viewable("/signupsummary.ftl",model);
-            NewCookie loginCookie = new NewCookie("facewallLoggedIn",email);
-            Response.ResponseBuilder response = Response.ok().entity(existing).cookie(loginCookie);
+            errorStatus = email + " has already been used. Please use a different one.";
+            model.put("statusError", errorStatus);
+            Viewable register = new Viewable("/signupform.ftl", model);
+            Response.ResponseBuilder response = Response.ok().entity(register);
             return response.build();
         }
     }

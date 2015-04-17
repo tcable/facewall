@@ -9,4 +9,5 @@ public interface Person {
     Team team();
     PersonId getId();
     String role();
+    String scrum();
 }

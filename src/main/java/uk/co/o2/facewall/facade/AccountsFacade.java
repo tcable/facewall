@@ -23,7 +23,7 @@ public class AccountsFacade {
         this.personRepository = personRepository;
     }
 
-    public boolean isAuthenticated(String email) {
+    public boolean isMatching(String email) {
         // check the db for matching email
         // if present return true
 

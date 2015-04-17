@@ -38,6 +38,11 @@ public class PersonInformationMapper {
                 personInformation.withRole(role);
             }
 
+            String scrum = (String) personNode.getProperty("scrum");
+            if (scrum != null) {
+                personInformation.withScrum(scrum);
+            }
+
             result = personInformation.build();
         }
         return result;

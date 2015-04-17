@@ -62,6 +62,13 @@ public class FacewallDAO {
         );
     }
 
+    public Iterable<PersonDTO> queryPerson(Query query) {
+        return dao.queryPersons(
+                databaseQueryFactory.forPersons()
+                        .withEmail(query.queryString())
+        );
+    }
+
     public Iterable<TeamDTO> queryTeams(Query query) {
         return dao.queryTeams(
                 databaseQueryFactory.forTeams()
