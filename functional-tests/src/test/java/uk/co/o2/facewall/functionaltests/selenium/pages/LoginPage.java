@@ -10,7 +10,8 @@ import java.util.List;
 public class LoginPage {
 
     public HomePage enterLoginDetails() {
-        WebBrowser.findElement(By.name("email")).sendKeys("doge@veryemail.com");
+        WebBrowser.findElement(By.name("email")).sendKeys("fahren@veryemail.com");
+        //WebBrowser.findElement(By.name("password")).sendKeys("fahren123");
         // TODO: add password function
         WebBrowser.findElement(By.id("login")).click();
         return new HomePage();

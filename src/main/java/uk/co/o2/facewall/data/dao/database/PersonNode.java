@@ -20,7 +20,11 @@ public class PersonNode {
         wrappedNode.setProperty("name", personInformation.getName());
         wrappedNode.setProperty("picture", personInformation.getPicture());
         wrappedNode.setProperty("email", personInformation.getEmail());
+        wrappedNode.setProperty("password", personInformation.getPassword());
         wrappedNode.setProperty("role", personInformation.getRole());
         wrappedNode.setProperty("scrum", personInformation.getScrum());
+        wrappedNode.setProperty("details", personInformation.getDetails());
+        wrappedNode.setProperty("location", personInformation.getLocation());
+        wrappedNode.setProperty("officeLocation", personInformation.getOfficeLocation());
     }
 }

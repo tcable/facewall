@@ -52,12 +52,15 @@ public class SignUpController {
     public Response submitSignUpForm(@FormParam("name") String name,
                                      @FormParam("imgUrl") String imgUrl,
                                      @FormParam("email") String email,
+                                     @FormParam("password") String password,
                                      @FormParam("team") String team,
                                      @FormParam("scrum") String scrum,
                                      @FormParam("role") String role,
-                                     @FormParam("location") String location) {
+                                     @FormParam("details") String details,
+                                     @FormParam("location") String location,
+                                     @FormParam("officeLocation") String officeLocation) {
 
-        UserModel userModel = new UserModel(email, imgUrl, name, role, location, team, scrum);
+        UserModel userModel = new UserModel(email, password, imgUrl, name, role, location, officeLocation, team, scrum, details);
         ValidatedUserModel validatedUserModel = userModelValidator.validate(userModel);
 
         Map<String, Object> model = new HashMap<>();

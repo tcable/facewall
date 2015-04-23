@@ -26,6 +26,15 @@ public class QueryingDAO {
         return dtos;
     }
 
+    public PersonDTO queryPerson(DatabaseQueryBuilder query) {
+        PersonDTO dto = new PersonDTO();
+
+        for (QueryResultRow row : db.query(query)) {
+            dto = new PersonDTO(row.getPerson(), row.getTeam());
+        }
+        return dto;
+    }
+
     public Iterable<TeamDTO> queryTeams(DatabaseQueryBuilder query) {
         TeamDTOs dtos = new TeamDTOs();
 

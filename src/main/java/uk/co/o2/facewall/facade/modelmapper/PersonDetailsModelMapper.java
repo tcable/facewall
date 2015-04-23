@@ -5,6 +5,6 @@ import uk.co.o2.facewall.model.PersonDetailsModel;
 
 public class PersonDetailsModelMapper {
     public PersonDetailsModel map(Person person) {
-        return new PersonDetailsModel(person.name(), person.team().name(), person.picture(), person.email(), person.role(), person.scrum());
+        return new PersonDetailsModel(person.name(), person.team().name(), person.picture(), person.email(), person.password(), person.role(), person.scrum(), person.details(), person.location(), person.officeLocation());
     }
 }

@@ -47,10 +47,12 @@ public class UserModelValidator {
                 .named(userModel.name)
                 .withPicture(userModel.imgUrl)
                 .withEmail(userModel.email)
+                .withPassword(userModel.password)
                 .withRole(userModel.role)
                 .withScrum(userModel.scrum)
-                //.withLocation(userModel.location)
-                //.withScrum(userModel.scrum)
+                .withDetails(userModel.details)
+                .withLocation(userModel.location)
+                .withOfficeLocation(userModel.officeLocation)
                 .build();
     }
 }

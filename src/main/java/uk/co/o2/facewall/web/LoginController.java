@@ -39,7 +39,7 @@ public class LoginController {
 
     @POST
     public Response submitLogin(@FormParam("email") String email) {
-
+        // , @FormParam("password") String password
         if(loginFacade.loginSucceeds(email)) {
             return loginFacade.SuccessfulResponse(email);
         } else {

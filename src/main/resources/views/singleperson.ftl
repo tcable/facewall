@@ -8,6 +8,7 @@
             <h5 class="personName">${name}</h5>
             <h5 class="personEmail">${email}</h5>
             <h5 class="personRole">${role}</h5>
+            <h5 class="personPassword">${password}</h5>
             <img class="single-person-pic" src="${picture}"></img>
             <h5 class="teamName">${teamName}</h5>
         </div>

@@ -62,8 +62,15 @@ public class FacewallDAO {
         );
     }
 
-    public Iterable<PersonDTO> queryPerson(Query query) {
-        return dao.queryPersons(
+    public PersonDTO queryPersonsPassword(Query query) {
+        return dao.queryPerson(
+                databaseQueryFactory.forPersons()
+                        .withPassword(query.queryString())
+        );
+    }
+
+    public PersonDTO queryPerson(Query query) {
+        return dao.queryPerson(
                 databaseQueryFactory.forPersons()
                         .withEmail(query.queryString())
         );

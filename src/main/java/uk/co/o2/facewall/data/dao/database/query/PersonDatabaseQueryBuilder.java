@@ -37,6 +37,11 @@ public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
           return this;
     }
 
+    public PersonDatabaseQueryBuilder withPassword(QueryString queryString) {
+          propertyCriteria.put("password", queryString.value);
+          return this;
+    }
+
     public DatabaseQuery build() {
         return new PersonDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }

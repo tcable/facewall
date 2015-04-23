@@ -21,8 +21,10 @@
                 <p class="role">${personInformation.role}</p>
     
                 <h3>Location</h3>
-                <!--<#--<p class="location">${personInformation.location}</p>-->-->
-                <p>Sorry, this field has not been implemented yet.</p>
+                <p class="location">${personInformation.location}</p>
+
+                <h3>Where you are based</h3>
+                <p class="officeLocation">${personInformation.officeLocation}</p>
     
                 <h3>Team</h3>
                 <p class="team">
@@ -34,14 +36,16 @@
                 </p>
     
                 <h3>Scrum</h3>
-                <!--<#--<p class="scrum">
+                <p class="scrum">
                     <#if !(personInformation.scrum)?? || personInformation.scrum == "">
                         <em>Not specified</em>
                     <#else>
                         ${personInformation.scrum}
                     </#if>
-                </p>-->-->
-                <p>Sorry, this field has not been implemented yet.</p>
+                </p>
+
+                <h3>Details about you</h3>
+                <p class="details">${personInformation.details}</p>
             </div>
     
             <div class="col-md-4">

@@ -24,6 +24,11 @@ public class PersonMapper {
             }
 
             @Override
+            public String password() {
+                return userModel.password;
+            }
+
+            @Override
             public String role() {
                 return userModel.role;
             }
@@ -31,6 +36,21 @@ public class PersonMapper {
             @Override
             public String scrum() {
                 return userModel.scrum;
+            }
+
+            @Override
+            public String location() {
+                return userModel.location;
+            }
+
+            @Override
+            public String officeLocation() {
+                return userModel.officeLocation;
+            }
+
+            @Override
+            public String details() {
+                return userModel.details;
             }
 
             @Override

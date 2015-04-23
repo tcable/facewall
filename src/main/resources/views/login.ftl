@@ -16,6 +16,11 @@
                     <label>Email address</label>
                     <input class="form-control" type="email" name="email" placeholder="Enter email" value="${email!""}" required>
                 </div>
+
+                <!---<div class="form-group">
+                    <label>Password address</label>
+                    <input class="form-control" type="password" name="password" placeholder="Enter password" value="${password!""}" required>
+                </div>--->
                 <input id="login" class="btn btn-primary btn-lg btn-block" type="submit" value="Login">
             </form>
         </div>

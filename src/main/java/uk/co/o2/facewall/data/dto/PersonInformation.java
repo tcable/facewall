@@ -21,13 +21,22 @@ public class PersonInformation {
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Email is invalid")
     private final String email;
+    @NotBlank(message = "password must not be blank")
+    @Length(max=25, message = "Length must be less than 25 characters")
+    private final String password;
     @NotBlank(message = "Role must not be blank")
     private final String role;
     @NotBlank(message = "Picture must not be blank")
     @URL(message = "The URL is invalid")
     private final String picture;
-    @NotBlank(message = "Scrum must not be blank")
+    @NotBlank(message = "scrum must not be blank")
     private final String scrum;
+    @NotBlank(message = "Details must not be blank")
+    private final String details;
+    @NotBlank(message = "Location must not be blank")
+    private final String location;
+    @NotBlank(message = "Office Location must not be blank")
+    private final String officeLocation;
 
 
     private PersonInformation(Builder builder) {
@@ -35,8 +44,12 @@ public class PersonInformation {
         name = builder.name;
         picture = builder.picture;
         email = builder.email;
+        password = builder.password;
         role = builder.role;
         scrum = builder.scrum;
+        details = builder.details;
+        location = builder.location;
+        officeLocation = builder.officeLocation;
     }
 
     public static Builder newPersonInformation() {
@@ -71,13 +84,33 @@ public class PersonInformation {
         return scrum;
     }
 
+    public String getPassword(){
+        return password;
+    }
+
+    public String getDetails(){
+        return details;
+    }
+
+    public String getLocation(){
+        return location;
+    }
+
+    public String getOfficeLocation(){
+        return officeLocation;
+    }
+
     public static class Builder {
         private PersonId id = noPersonId();
         private String name = "";
         private String picture = "";
         private String email = "";
+        private String password = "";
         private String role = "";
         private String scrum = "";
+        private String details = "";
+        private String location = "";
+        private String officeLocation = "";
 
         public PersonInformation build() {
             return new PersonInformation(this);
@@ -103,6 +136,11 @@ public class PersonInformation {
             return this;
         }
 
+        public Builder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
         public Builder withRole(String role) {
             this.role = role;
             return this;
@@ -110,6 +148,21 @@ public class PersonInformation {
 
         public Builder withScrum(String scrum) {
             this.scrum = scrum;
+            return this;
+        }
+
+        public Builder withDetails(String details) {
+            this.details = details;
+            return this;
+        }
+
+        public Builder withLocation(String location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder withOfficeLocation(String officeLocation) {
+            this.officeLocation = officeLocation;
             return this;
         }
     }

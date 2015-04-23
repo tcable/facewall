@@ -29,7 +29,7 @@
                         </div>
                     </#if>
                     <label>Url to picture</label>
-                    <input class="form-control" type="url" name="imgUrl" placeholder="Enter url" value="${(personInformation.picture)!""}" required>
+                    <input class="form-control" type="url" name="imgUrl" placeholder="Enter url" value="${(personInformation.picture)!""}">
                 </div>
 
                 <div class="form-group">
@@ -40,6 +40,16 @@
                     </#if>
                     <label>Email address</label>
                     <input class="form-control" type="email" name="email" placeholder="Enter email" value="${(personInformation.email)!""}" required>
+                </div>
+
+                <div class="form-group">
+                    <#if (errors["personInformation.password"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.password"]}
+                        </div>
+                    </#if>
+                    <label>Your Password</label>
+                    <input class="form-control" type="password" name="password" placeholder="Enter password" value="${(personInformation.password)!""}" required>
                 </div>
 
                 <div class="form-group">
@@ -91,6 +101,16 @@
                 </div>
 
                 <div class="form-group">
+                    <#if (errors["personInformation.details"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.details"]}
+                        </div>
+                    </#if>
+                    <label>Some details about you/your project</label>
+                    <input class="form-control" type="text" name="details" placeholder="Enter some details about you/your project" value="${(personInformation.details)!""}" required>
+                </div>
+
+                <div class="form-group">
                     <#if (errors["personInformation.location"])??>
                         <div class="alert alert-danger">
                             <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.location"]}
@@ -103,6 +123,16 @@
                         <option value="Leeds">Leeds</option>
                         <option value="Pune">Pune</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <#if (errors["personInformation.officeLocation"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.officeLocation"]}
+                        </div>
+                    </#if>
+                    <label>Where are you based?</label>
+                    <input class="form-control" type="text" name="officeLocation" placeholder="Enter where you are based" value="${(personInformation.officeLocation)!""}" required>
                 </div>
 
                 <input id="submit" class="btn btn-primary btn-lg btn-block" type="submit">

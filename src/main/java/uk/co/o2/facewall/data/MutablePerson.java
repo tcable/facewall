@@ -30,6 +30,10 @@ class MutablePerson implements Person {
         return personInformation.getEmail();
     }
 
+    @Override final public String password() {
+        return personInformation.getPassword();
+    }
+
     @Override final public String role() {
         return personInformation.getRole();
     }
@@ -40,6 +44,18 @@ class MutablePerson implements Person {
 
     @Override final public String scrum() {
         return personInformation.getScrum();
+    }
+
+    @Override final public String details() {
+        return personInformation.getDetails();
+    }
+
+    @Override final public String location() {
+        return personInformation.getLocation();
+    }
+
+    @Override final public String officeLocation() {
+        return personInformation.getOfficeLocation();
     }
 
     public void setTeam(Team team) {
