@@ -11,23 +11,52 @@
         </div>
         <#if persons?has_content>
             <div>
+                <ul class="nav nav-tabs nav-justified">
+                    <li><a id="people" href="/">People</a></li>
+                    <li><a id="teams" href="/">Teams</a></li>
+                    <li><a id="companies" href="/">Companies</a></li>
+                    <li><a id="jobRole" href="/">Job Role</a></li>
+                </ul>
+            </div>
+
+            <script>
+                $("ul.nav").children().eq(0).addClass("active");
+            </script>
+
+            <div>
                 <h1>People</h1>
             </div>
             <div class="row">
                 <#list persons as result>
+
+
                     <div class="col-md-3 col-sm-4 entry">
-                        <h5 class="text-center teamName">
-                            <a href="/team/${result.teamName}">${result.teamName}</a>
-                        </h5>
                         <a href="/person/${result.link}">
-                            <div class="imgWrapper ${result.colour}" style="border: 15px solid #${result.colour}">
-                                <img class="avatar" src="${result.picture}"/>
-                            </div>
-                        </a>
-                        <h3 class="text-center entryName">
+                        <div class="imgWrapper ${result.colour}" style="border: 15px solid #${result.colour}">
+                            <img class="avatar" src="${result.picture}"/>
+                        </div>
+                        <h4 class="text-center entryName">
                             <a href="/person/${result.link}">${result.name}</a>
-                        </h3>
+                        </h4>
+                        <h5 class="text-center teamName">
+                            ${result.role} - O2
+                        </h5>
+                        <h5 class="text-center teamName">
+                            ${result.teamName} - Active
+                        </h5>
+                        <#if result.location??>
+                            <h5 class="text-center teamName">
+                                ${result.location}
+                            </h5>
+                        <#else>
+                            <h5 class="text-center teamName">
+                                Bath Road, Slough
+                            </h5>
+                        <i class="fa fa-envelope-o"></i> &nbsp; <i class="fa fa-skype"></i> &nbsp; <i class="fa fa-phone"></i>
+                        </#if>
+                        </a>
                     </div>
+
                 </#list>
             </div>
         </#if>
@@ -48,7 +77,6 @@
         </#if>
     </#if>
 </div>
-<script src="/assets/javascripts/jquery.fakecrop.js"></script>
 <script>
     $(document).ready(function () {
         $('img.avatar').fakecrop();

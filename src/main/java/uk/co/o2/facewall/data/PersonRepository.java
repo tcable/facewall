@@ -5,6 +5,7 @@ import uk.co.o2.facewall.data.datatype.PersonId;
 import uk.co.o2.facewall.data.dto.PersonDTO;
 import uk.co.o2.facewall.data.dto.TeamInformation;
 import uk.co.o2.facewall.domain.Person;
+import uk.co.o2.facewall.domain.Persons;
 import uk.co.o2.facewall.domain.Query;
 import uk.co.o2.facewall.domain.Team;
 

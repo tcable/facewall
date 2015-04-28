@@ -10,4 +10,8 @@ public class DefaultSearchResultsModel implements SearchResultsModel {
         this.persons = persons;
         this.teams = teams;
     }
+
+    public DefaultSearchResultsModel(List<PersonSearchResult> persons) {
+        this.persons = persons;
+    }
 }

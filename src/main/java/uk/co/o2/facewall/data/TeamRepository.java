@@ -2,6 +2,7 @@ package uk.co.o2.facewall.data;
 
 import uk.co.o2.facewall.data.dao.FacewallDAO;
 import uk.co.o2.facewall.data.datatype.TeamId;
+import uk.co.o2.facewall.domain.Persons;
 import uk.co.o2.facewall.domain.Query;
 import uk.co.o2.facewall.domain.Team;
 
